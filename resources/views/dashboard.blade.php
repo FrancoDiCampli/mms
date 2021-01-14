@@ -45,7 +45,7 @@
                             <div class="flex items-start justify-between">
                               <div class="flex flex-col space-y-2">
                                 <span class="text-gray-400">Total Pacientes</span>
-                                <span class="text-lg font-semibold">100,221</span>
+                                <span class="text-lg font-semibold">100</span>
                               </div>
                               <div class="p-10 bg-gray-200 rounded-md"></div>
                             </div>

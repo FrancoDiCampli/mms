@@ -39,21 +39,7 @@
 
                 {{-- Main --}}
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200" @click="sidebarOpen = false">                
-                    <div class="container mx-auto px-6 md:px-10 py-8 min-h-full">
-                        <p>Dashboard MMS</p>
-                        <div class="p-4 w-full md:w-3/12 transition-shadow border rounded-lg shadow-sm hover:shadow-lg bg-white">
-                            <div class="flex items-start justify-between">
-                              <div class="flex flex-col space-y-2">
-                                <span class="text-gray-400">Total Pacientes</span>
-                                <span class="text-lg font-semibold">100</span>
-                              </div>
-                              <div class="p-10 bg-gray-200 rounded-md"></div>
-                            </div>
-                            <div>
-                              <span class="inline-block px-2 text-sm text-white bg-green-300 rounded">14%</span>
-                              <span>from 2021</span>
-                            </div>
-                          </div>                       
+                    <div class="container mx-auto px-6 md:px-10 py-8 min-h-full">       
 
                         @yield('content')
                     </div>

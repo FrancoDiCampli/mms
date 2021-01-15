@@ -53,7 +53,8 @@
                               <span class="inline-block px-2 text-sm text-white bg-green-300 rounded">14%</span>
                               <span>from 2021</span>
                             </div>
-                          </div>
+                          </div>                       
+
                         @yield('content')
                     </div>
                 </main>

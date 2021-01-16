@@ -15,4 +15,9 @@ class Patient extends Model
     {
         return $this->belongsTo(SocialWork::class, 'social_work_id');
     }
+
+    public function queries()
+    {
+        return $this->hasMany(Query::class);
+    }
 }

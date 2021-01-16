@@ -18,16 +18,16 @@ class CreatePatientsTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('dni');
-            $table->string('fnac');
-            $table->integer('age');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('address');
-            $table->string('city');
-            $table->string('province');
-            $table->bigInteger('social_work_id');
-            $table->string('affiliate');
-            $table->text('observations');
+            $table->string('fnac')->nullable();
+            $table->integer('age')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
+            $table->bigInteger('social_work_id')->nullable();
+            $table->string('affiliate')->nullable();
+            $table->text('observations')->nullable();
             $table->timestamps();
         });
     }

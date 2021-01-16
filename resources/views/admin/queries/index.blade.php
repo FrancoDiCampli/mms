@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="flex justify-end -mt-8 -mb-4"><a href="{{route('patients.create')}}" class="rounded p-2"
-        title="Crear Paciente">
+<div class="flex justify-end -mt-8 -mb-4"><a href="{{route('queries.create')}}" class="rounded p-2"
+        title="Crear Consulta">
         <svg aria-hidden="true" data-prefix="fas" data-icon="plus-circle"
             class="w-8 text-indigo-400 hover:text-indigo-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path fill="currentColor"
@@ -22,37 +22,33 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Fecha
+                                </th>
+                                <th
+                                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Paciente
                                 </th>
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    DNI
-                                </th>
-                                <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Obra Social
+                                    Médico
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($patients ?? [] as $patient)
+                            @foreach ($queries ?? [] as $query)
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    {{$patient->surname}} {{$patient->name}}
+                                    {{$query->created_at->format('d-m-Y')}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    {{$patient->dni}}
+                                    {{$query->patient->surname}} {{$query->patient->name}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    @if ($patient->social_work_id)
-                                    {{$patient->socialwork->name}}
-                                    @else
-                                    Particular
-                                    @endif
+                                    {{$query->medic->name}}
                                 </td>
                                 <td class="flex px-6 py-4 whitespace-no-wrap justify-end leading-5 font-medium">
-                                    <a title="Ver Más" href="{{route('patients.show', $patient->id)}}"
+                                    <a title="Ver Más" href="{{route('queries.show', $query->id)}}"
                                         class="text-indigo-400 hover:text-indigo-700">
                                         <svg aria-hidden="true" data-prefix="fas" data-icon="eye" class="w-8"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -65,7 +61,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$patients->links()}}
+                    {{$queries->links()}}
                 </div>
             </div>
         </div>

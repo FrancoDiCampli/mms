@@ -62,7 +62,11 @@
                         Obra Social
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        @if ($patient->social_work_id)
                         {{$patient->socialwork->name}}
+                        @else
+                        Particular
+                        @endif
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -78,7 +82,9 @@
                         Fecha Nacimiento
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{$patient->fnac}}
+                        @if ($patient->fnac)
+                        {{$patient->fnac->format('d-m-Y')}}
+                        @endif
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -122,6 +128,24 @@
                         {{$patient->observations}}
                     </dd>
                 </div>
+            </dl>
+        </div>
+
+        <div>
+            Consultas
+            <dl>
+                @foreach ($patient->queries as $item)
+                <hr>
+                <div>
+                    <dt>
+                        Fecha: {{$item->created_at->format('d-m-Y')}} Hora: {{$item->created_at->format('H:s')}}
+                    </dt>
+                    <dd>
+                        Consulta: {{$item->query}}
+                    </dd>
+                </div>
+                <hr>
+                @endforeach
             </dl>
         </div>
     </div>

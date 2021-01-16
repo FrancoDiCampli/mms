@@ -39,7 +39,10 @@
                                         class="block text-sm font-medium leading-5 text-gray-700">Obra Social</label>
                                     <select id="social_work_id" name="social_work_id"
                                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                        @if ($patient->social_work_id)
                                         <option value="{{$patient->socialwork->id}}">{{$patient->socialwork->name}}
+                                            @endif
+                                        <option value="{{null}}">Seleccionar</option>
                                         </option>
                                         @foreach ($socialworks as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>

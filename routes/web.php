@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\QueryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::resource('patients', PatientController::class);
+    Route::resource('queries', QueryController::class);
 });
 
 require __DIR__ . '/auth.php';

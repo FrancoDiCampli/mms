@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use App\Models\SocialWork;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
     public function index()
     {
-        $patients = Patient::orderBy('surname', 'DESC')->paginate(5);
+        $patients = Patient::orderBy('surname', 'ASC')->paginate(5);
         return view('admin.patients.index', compact('patients'));
     }
 
@@ -26,7 +27,7 @@ class PatientController extends Controller
             'name' => 'required|min:3',
             'surname' => 'required|min:3',
             'dni' => 'required|min:7|max:8',
-            'affiliate' => 'required|min:5',
+            'affiliate' => 'nullable|min:5',
             'email' => 'nullable|email',
             'phone' => 'nullable|min:6',
             'fnac' => 'nullable|min:8',
@@ -34,7 +35,7 @@ class PatientController extends Controller
             'address' => 'nullable|min:6',
             'city' => 'nullable|min:3',
             'province' => 'nullable|min:3',
-            'social_work_id' => 'required',
+            'social_work_id' => 'nullable',
             'observations' => 'nullable|min:5',
         ]);
         Patient::create($data);
@@ -44,6 +45,10 @@ class PatientController extends Controller
     public function show($id)
     {
         $patient = Patient::find($id);
+        if (!$patient->age && $patient->fnac) {
+            $patient->fnac = Carbon::parse($patient->fnac);
+            $patient->age = $patient->fnac->age;
+        }
         return view('admin.patients.show', compact('patient'));
     }
 
@@ -56,8 +61,24 @@ class PatientController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $request;
         $patient = Patient::find($id);
+        $data = $request->validate([
+            'name' => 'required|min:3',
+            'surname' => 'required|min:3',
+            'dni' => 'required|min:7|max:8',
+            'affiliate' => 'nullable|min:5',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|min:6',
+            'fnac' => 'nullable|min:8',
+            'age' => 'nullable|min:1',
+            'address' => 'nullable|min:6',
+            'city' => 'nullable|min:3',
+            'province' => 'nullable|min:3',
+            'social_work_id' => 'nullable',
+            'observations' => 'nullable|min:5',
+        ]);
+        $patient->update($data);
+        return redirect()->route('patients.index');
     }
 
     public function destroy($id)

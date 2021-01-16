@@ -10,46 +10,50 @@
     <title>{{ config('app.name') }}</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,600">
-    
+
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    
+
     <script src="{{ mix('js/app.js') }}" defer></script>
-    
+
+    @livewireStyles
 </head>
 
 <body class="">
 
-    <div id="app">    
+    <div id="app">
         <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
-            <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed w-full h-full z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>
-                
+            <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false"
+                class="fixed w-full h-full z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>
+
             {{-- Sidebar menu mobile--}}
             <div class="block lg:hidden">
                 @include('partials.sidebarMobile')
-            </div>        
+            </div>
 
             {{-- Sidebar menu desktop--}}
             <div class="hidden lg:block">
                 @include('partials.sidebarDesktop')
-            </div>            
-            
+            </div>
+
             <div class="flex-1 flex flex-col overflow-hidden">
                 {{-- Header menu --}}
                 @include('partials.headerMenu')
 
                 {{-- Main --}}
-                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200" @click="sidebarOpen = false">                
-                    <div class="container mx-auto px-6 md:px-10 py-8 min-h-full">       
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200" @click="sidebarOpen = false">
+                    <div class="container mx-auto px-6 md:px-10 py-8 min-h-full">
 
                         @yield('content')
                     </div>
                 </main>
-            </div>       
-            
+            </div>
+
         </div>
     </div>
 
     @stack('js')
+
+    @livewireScripts
 </body>
 
 </html>

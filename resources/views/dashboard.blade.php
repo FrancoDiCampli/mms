@@ -37,7 +37,9 @@
 
             <div class="flex-1 flex flex-col overflow-hidden">
                 {{-- Header menu --}}
-                @include('partials.headerMenu')
+                <div @click.away="sidebarOpen = false">
+                    @include('partials.headerMenu')
+                </div>
 
                 {{-- Main --}}
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200" @click="sidebarOpen = false">

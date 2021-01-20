@@ -4,10 +4,10 @@
             <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
                     <div class="col-span-6">
-                        <label for="paciente" class="block text-sm font-medium leading-5 text-gray-700">Buscar
-                            Paciente</label>
-                        <input wire:model.debounce.1000ms="buscarPaciente" type="search" id="paciente" name="paciente"
-                            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <label for="paciente" class="block text-sm font-medium leading-5 text-gray-700">Paciente</label>
+                        <input wire:model.debounce.500ms="buscarPaciente" type="search" id="paciente" name="paciente"
+                            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            placeholder="Ingrese apellido o dni">
                         @if (count($pacientes ?? [])>0)
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -25,7 +25,7 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($pacientes ?? [] as $paciente)
-                                    <tr class="cursor.pointer" wire:click="selectedPaciente({{ $paciente }})">
+                                    <tr style="cursor: pointer;" wire:click="selectedPaciente({{ $paciente }})">
                                         <td
                                             class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                             {{$paciente->dni}}
@@ -48,7 +48,7 @@
                         <label for="dni" class="block text-sm font-medium leading-5 text-gray-700">DNI</label>
                         <input id="dni" name="dni" minlength="11" max="11"
                             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                            value="{{$paciente->dni ?? ''}}" disabled>
+                            wire:model="patient_dni" disabled>
                         @error('patient_id')
                         <span class="text-red-500">{{$message}}</span>
                         @enderror
@@ -59,12 +59,12 @@
                             class="block text-sm font-medium leading-5 text-gray-700">Paciente</label>
                         <input id="apellido_nombre" name="apellido_nombre"
                             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                            value="{{$paciente->surname  ?? ''}} {{$paciente->name  ?? ''}}" disabled>
+                            wire:model="patient_name" disabled>
                     </div>
 
                     <div class="col-span-6">
                         <label for="consulta" class="block text-sm font-medium leading-5 text-gray-700">Consulta</label>
-                        <textarea wire:model="consulta" name="consulta" id="consulta" cols="30" rows="10"
+                        <textarea wire:model.defer="consulta" name="consulta" id="consulta" cols="30" rows="10"
                             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                         @error('consulta')
                         <span class="text-red-500">{{$message}}</span>

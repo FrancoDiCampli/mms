@@ -10,6 +10,8 @@ class Create extends Component
 {
     public $consulta;
     public $patient_id;
+    public $patient_dni;
+    public $patient_name;
     public $buscarPaciente;
     public $pacientes;
     public $paciente;
@@ -18,6 +20,8 @@ class Create extends Component
     {
         $this->paciente = $item;
         $this->patient_id = $item->id;
+        $this->patient_dni = $item->dni;
+        $this->patient_name = $item->surname . ' ' . $item->name;
         $this->buscarPaciente = '';
         $this->pacientes = null;
     }
@@ -47,7 +51,12 @@ class Create extends Component
     public function render()
     {
         if ($this->buscarPaciente != '') {
-            $this->pacientes = Patient::where('surname', 'LIKE', $this->buscarPaciente . '%')->get();
+            $this->pacientes = Patient::orWhere('surname', 'LIKE', $this->buscarPaciente . '%')
+                ->orWhere('dni', 'LIKE', $this->buscarPaciente . '%')
+                ->orWhere('name', 'LIKE', $this->buscarPaciente . '%')
+                ->get();
+        } else {
+            $this->pacientes = null;
         }
         return view('livewire.queries.create', [
             'pacientes' => $this->pacientes,

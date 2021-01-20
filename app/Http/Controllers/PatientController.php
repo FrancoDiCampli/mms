@@ -23,21 +23,28 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|min:3',
-            'surname' => 'required|min:3',
-            'dni' => 'required|min:7|max:8',
-            'affiliate' => 'nullable|min:5',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|min:6',
-            'fnac' => 'nullable|min:8',
-            'age' => 'nullable|min:1',
-            'address' => 'nullable|min:6',
-            'city' => 'nullable|min:3',
-            'province' => 'nullable|min:3',
-            'social_work_id' => 'nullable',
-            'observations' => 'nullable|min:5',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required|min:3',
+                'surname' => 'required|min:3',
+                'dni' => 'required|min:7|max:8',
+                'affiliate' => 'nullable|min:5',
+                'email' => 'nullable|email',
+                'phone' => 'nullable|min:6',
+                'fnac' => 'nullable|min:8',
+                'age' => 'nullable|min:1',
+                'address' => 'nullable|min:6',
+                'city' => 'nullable|min:3',
+                'province' => 'nullable|min:3',
+                'social_work_id' => 'nullable',
+                'observations' => 'nullable|min:5',
+            ],
+            [
+                'name.required' => 'El campo nombre es requerido.',
+                'surname.required' => 'El campo apellido es requerido.',
+                'dni.required' => 'El campo dni es requerido.',
+            ]
+        );
         Patient::create($data);
         return redirect()->route('patients.index');
     }
@@ -45,10 +52,14 @@ class PatientController extends Controller
     public function show($id)
     {
         $patient = Patient::find($id);
-        if (!$patient->age && $patient->fnac) {
+
+        if ($patient->fnac) {
             $patient->fnac = Carbon::parse($patient->fnac);
-            $patient->age = $patient->fnac->age;
+            if (!$patient->age) {
+                $patient->age = $patient->fnac->age;
+            }
         }
+
         return view('admin.patients.show', compact('patient'));
     }
 

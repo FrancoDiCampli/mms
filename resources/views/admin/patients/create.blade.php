@@ -36,7 +36,7 @@
                                         class="block text-sm font-medium leading-5 text-gray-700">Obra Social</label>
                                     <select id="social_work_id" name="social_work_id"
                                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                        <option value="{{null}}">Seleccionar</option>
+                                        <option selected value="{{null}}">Seleccionar</option>
                                         @foreach ($socialworks as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                         @endforeach
@@ -79,7 +79,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="fnac" class="block text-sm font-medium leading-5 text-gray-700">Fecha
                                         Nacimiento</label>
-                                    <input id="fnac" name="fnac" type="date"
+                                    <input id="fnac" name="fnac" type="date" max="{{now()->format('Y-m-d')}}"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('fnac')
                                     <span class="text-red-500">{{$message}}</span>

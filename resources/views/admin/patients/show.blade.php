@@ -15,7 +15,7 @@
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
-                {{$patient->surname}} {{$patient->name}}
+                {{$patient->full_name}}
             </h3>
             <div class="flex justify-end -mt-10">
                 <x-dropdown align="right" width="48">

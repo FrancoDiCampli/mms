@@ -28,7 +28,7 @@
                             @foreach ($patients ?? [] as $patient)
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    {{$patient->surname}} {{$patient->name}}
+                                    {{$patient->full_name}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                     {{$patient->dni}}

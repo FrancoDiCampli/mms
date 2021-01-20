@@ -11,6 +11,11 @@ class Patient extends Model
 
     protected $guarded = [];
 
+    public function getFullNameAttribute()
+    {
+        return ucwords($this->surname . ', ' . $this->name);
+    }
+
     public function socialwork()
     {
         return $this->belongsTo(SocialWork::class, 'social_work_id');

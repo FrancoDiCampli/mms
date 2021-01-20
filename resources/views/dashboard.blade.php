@@ -42,12 +42,7 @@
                 {{-- Main --}}
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200" @click="sidebarOpen = false">
                     <div class="container mx-auto px-6 md:px-10 py-8 min-h-full">
-                        <form>
-                            <input class="border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent ...">
-                            <button class="bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 ...">
-                              Sign up
-                            </button>
-                          </form>
+                        
                         @yield('content')
                     </div>
                 </main>

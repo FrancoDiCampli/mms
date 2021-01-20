@@ -42,7 +42,7 @@
                 {{-- Main --}}
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200" @click="sidebarOpen = false">
                     <div class="container mx-auto px-6 md:px-10 py-8 min-h-full">
-
+                        
                         @yield('content')
                     </div>
                 </main>

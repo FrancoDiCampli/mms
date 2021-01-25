@@ -3,6 +3,54 @@
         <div class="shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
+                    @foreach ($arreglo as $item)
+                    <div class="bg-blue-500">
+                        <span>{{$item}}
+                            <button class="bg-red-500 rounded-xl" type="button"
+                                wire:click="quitar({{$loop->index}})">X</button></span>
+                    </div>
+                    @endforeach
+
+                    <div class="col-span-6">
+                        <label for="test" class="block text-sm font-medium leading-5 text-gray-700">Test</label>
+                        <input wire:model.lazy="inputTest" wire:keydown.enter="funtest" type="search" id="test"
+                            name="test"
+                            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    </div>
+
+                    @if (count($pacientes ?? [])>0)
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        DNI
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        Paciente
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($pacientes ?? [] as $paciente)
+                                <tr style="cursor: pointer;" wire:click="selectedPaciente({{ $paciente }})">
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                        {{$paciente->dni}}
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                        {{$paciente->surname}} {{$paciente->name}}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
+
                     <div class="col-span-6">
                         <label for="paciente" class="block text-sm font-medium leading-5 text-gray-700">Paciente</label>
                         <input wire:model.debounce.500ms="buscarPaciente" type="search" id="paciente" name="paciente"

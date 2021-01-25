@@ -42,7 +42,7 @@
                                     {{$query->created_at->format('d-m-Y')}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    {{$query->patient->surname}} {{$query->patient->name}}
+                                    {{$query->patient->full_name}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                     {{$query->medic->name}}

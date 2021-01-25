@@ -3,6 +3,12 @@
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <div wire:offline>
+                        No hay conexión a Internet.
+                    </div>
+                    <div wire:loading>
+                        cargando...
+                    </div>
                     <input wire:model.debounce.500ms="search" type="search" id="paciente" name="paciente"
                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="Buscar paciente">
@@ -17,10 +23,6 @@
                                     class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     DNI
                                 </th>
-                                <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Obra Social
-                                </th>
                                 <th class="px-6 py-3 bg-gray-50"></th>
                             </tr>
                         </thead>
@@ -28,17 +30,10 @@
                             @foreach ($patients ?? [] as $patient)
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    {{$patient->surname}} {{$patient->name}}
+                                    {{$patient->full_name}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                     {{$patient->dni}}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    @if ($patient->social_work_id)
-                                    {{$patient->socialwork->name}}
-                                    @else
-                                    Particular
-                                    @endif
                                 </td>
                                 <td class="flex px-6 py-4 whitespace-no-wrap justify-end leading-5 font-medium">
                                     <a title="Ver Más" href="{{route('patients.show', $patient->id)}}"

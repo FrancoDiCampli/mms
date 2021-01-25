@@ -9,6 +9,8 @@ use Livewire\Component;
 class Create extends Component
 {
     public $consulta;
+    public $arreglo = [];
+    public $inputTest;
     public $patient_id;
     public $patient_dni;
     public $patient_name;
@@ -24,6 +26,19 @@ class Create extends Component
         $this->patient_name = $item->surname . ' ' . $item->name;
         $this->buscarPaciente = '';
         $this->pacientes = null;
+    }
+
+    public function funtest()
+    {
+        if (strlen($this->inputTest) > 0) {
+            $this->arreglo[] = $this->inputTest;
+            $this->inputTest = '';
+        }
+    }
+
+    public function quitar($id)
+    {
+        array_splice($this->arreglo, $id, 1, null);
     }
 
     public function store()

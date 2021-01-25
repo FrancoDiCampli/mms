@@ -35,7 +35,9 @@ class PatientController extends Controller
                 'address' => 'nullable|min:6',
                 'city' => 'nullable|min:3',
                 'province' => 'nullable|min:3',
-                'social_work_id' => 'nullable',
+                'social_works' => 'nullable',
+                'ant_medical' => 'nullable|min:5',
+                'ant_surgical' => 'nullable|min:5',
                 'observations' => 'nullable|min:5',
             ],
             [
@@ -51,6 +53,15 @@ class PatientController extends Controller
     public function show($id)
     {
         $patient = Patient::find($id);
+        $obras = collect();
+
+        if ($patient->social_works) {
+            foreach ($patient->social_works as $value) {
+                $aux = SocialWork::find($value['id']);
+                $obras->push($aux);
+            }
+            $patient->obras = $obras;
+        }
 
         if ($patient->fnac) {
             $patient->fnac = Carbon::parse($patient->fnac);

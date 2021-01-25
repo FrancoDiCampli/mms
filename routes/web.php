@@ -26,7 +26,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::resource('patients', PatientController::class);
-    Route::resource('queries', QueryController::class);
+    Route::resource('queries', QueryController::class)->except('create');
+    Route::get('queriescreate/{id}', [QueryController::class, 'create'])->name('queries.create');
 });
 
 require __DIR__ . '/auth.php';

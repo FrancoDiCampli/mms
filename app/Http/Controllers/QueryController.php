@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\Query;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,29 @@ class QueryController extends Controller
         return view('admin.queries.index', compact('queries'));
     }
 
-    public function create()
+    public function create($id)
     {
-        return view('admin.queries.create');
+        $patient = Patient::find($id);
+        return view('admin.queries.create', compact('patient'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+                'consulta' => 'required|min:5',
+            ],
+            [
+                'consulta.required' => 'El campo consulta es requerido.',
+            ],
+        );
+
+        Query::create([
+            'query' => $request->consulta,
+            'patient_id' => $request->patient_id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->route('patients.show', $request->patient_id);
     }
 }

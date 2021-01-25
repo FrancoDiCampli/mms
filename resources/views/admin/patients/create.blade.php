@@ -34,13 +34,14 @@
                                 <div class="col-span-6 sm:col-span-2">
                                     <label for="social_work_id"
                                         class="block text-sm font-medium leading-5 text-gray-700">Obra Social</label>
-                                    <select id="social_work_id" name="social_work_id"
-                                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                        <option selected value="{{null}}">Seleccionar</option>
-                                        @foreach ($socialworks as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    @foreach ($socialworks as $item)
+                                    <ul>
+                                        <li><input type="checkbox" name="social_works[]" id=""
+                                                value="{{$item->id}}">{{$item->name}}</li>
+                                    </ul>
+                                    @endforeach
+
+
                                     @error('social_work_id')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
@@ -142,6 +143,28 @@
                                     <input id="province" name="province"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('province')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="ant_medical"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
+                                        Médicos</label>
+                                    <textarea name="ant_medical" id="ant_medical" cols="30" rows="5"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                    @error('ant_medical')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="ant_surgical"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
+                                        Quirúrgicos</label>
+                                    <textarea name="ant_surgical" id="ant_surgical" cols="30" rows="5"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                    @error('ant_surgical')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>

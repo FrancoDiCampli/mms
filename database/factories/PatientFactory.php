@@ -25,6 +25,7 @@ class PatientFactory extends Factory
             'name' => $this->faker->name,
             'surname' => $this->faker->lastName,
             'dni' => $this->faker->randomNumber(8, true),
+            'social_works' => ['id' => 1]
         ];
     }
 }

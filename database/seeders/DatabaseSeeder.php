@@ -17,9 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        SocialWork::create(['name' => 'Particular']);
+        SocialWork::create(['name' => 'INSSSEP']);
+        SocialWork::create(['name' => 'PAMI']);
+        SocialWork::create(['name' => 'OSDE']);
+
         Patient::factory(1000)->create();
-        SocialWork::factory(5)->create();
 
         User::create([
             'name' => 'Sys Medical',

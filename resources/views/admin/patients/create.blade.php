@@ -32,7 +32,7 @@
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-2">
-                                    <label for="social_work_id"
+                                    <label for="social_works"
                                         class="block text-sm font-medium leading-5 text-gray-700">Obra Social</label>
                                     @foreach ($socialworks as $item)
                                     <ul>
@@ -40,9 +40,7 @@
                                                 value="{{$item->id}}">{{$item->name}}</li>
                                     </ul>
                                     @endforeach
-
-
-                                    @error('social_work_id')
+                                    @error('social_works')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>

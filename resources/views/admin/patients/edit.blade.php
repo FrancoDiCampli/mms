@@ -35,20 +35,16 @@
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-2">
-                                    <label for="social_work_id"
+                                    <label for="social_works"
                                         class="block text-sm font-medium leading-5 text-gray-700">Obra Social</label>
-                                    <select id="social_work_id" name="social_work_id"
-                                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                        @if ($patient->social_work_id)
-                                        <option value="{{$patient->socialwork->id}}">{{$patient->socialwork->name}}
-                                            @endif
-                                        <option value="{{null}}">Seleccionar</option>
-                                        </option>
-                                        @foreach ($socialworks as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('social_work_id')
+                                    @foreach ($patient->obras as $value)
+                                    <ul>
+                                        <li><input type="checkbox" name="social_works[]" id="" @if ($value->check)
+                                            checked
+                                            @endif value="{{$value->id}}">{{$value->name}}</li>
+                                    </ul>
+                                    @endforeach
+                                    @error('social_works')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>

@@ -35,7 +35,7 @@ class PatientController extends Controller
                 'address' => 'nullable|min:6',
                 'city' => 'nullable|min:3',
                 'province' => 'nullable|min:3',
-                'social_works' => 'nullable',
+                'social_works' => 'required',
                 'ant_medical' => 'nullable|min:5',
                 'ant_surgical' => 'nullable|min:5',
                 'observations' => 'nullable|min:5',
@@ -44,6 +44,7 @@ class PatientController extends Controller
                 'name.required' => 'El campo nombre es requerido.',
                 'surname.required' => 'El campo apellido es requerido.',
                 'dni.required' => 'El campo dni es requerido.',
+                'social_works.required' => 'El campo obra social es requerido.',
             ]
         );
         Patient::create($data);
@@ -77,27 +78,56 @@ class PatientController extends Controller
     {
         $patient = Patient::find($id);
         $socialworks = SocialWork::all();
-        return view('admin.patients.edit', compact('patient', 'socialworks'));
+        $obras = collect();
+
+        $indices = collect($patient->social_works)->keyBy('id')->keys();
+
+        $si = $socialworks->whereIn('id', $indices);
+        $si->map(function ($value) {
+            $value->check = true;
+        });
+
+        $no = $socialworks->whereNotIn('id', $indices);
+        $no->map(function ($value) {
+            $value->check = false;
+        });
+
+        $obras->push($si);
+        $obras->push($no);
+
+        $patient->obras = $obras->flatten()->sortBy('id');
+
+        return view('admin.patients.edit', compact('patient'));
     }
 
     public function update(Request $request, $id)
     {
         $patient = Patient::find($id);
-        $data = $request->validate([
-            'name' => 'required|min:3',
-            'surname' => 'required|min:3',
-            'dni' => 'required|min:7|max:8',
-            'affiliate' => 'nullable|min:5',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|min:6',
-            'fnac' => 'nullable|min:8',
-            'age' => 'nullable|min:1',
-            'address' => 'nullable|min:6',
-            'city' => 'nullable|min:3',
-            'province' => 'nullable|min:3',
-            'social_work_id' => 'nullable',
-            'observations' => 'nullable|min:5',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required|min:3',
+                'surname' => 'required|min:3',
+                'dni' => 'required|min:7|max:8',
+                'affiliate' => 'nullable|min:5',
+                'email' => 'nullable|email',
+                'phone' => 'nullable|min:6',
+                'fnac' => 'nullable|min:8',
+                'age' => 'nullable|min:1',
+                'address' => 'nullable|min:6',
+                'city' => 'nullable|min:3',
+                'province' => 'nullable|min:3',
+                'social_works' => 'required',
+                'ant_medical' => 'nullable|min:5',
+                'ant_surgical' => 'nullable|min:5',
+                'observations' => 'nullable|min:5',
+            ],
+            [
+                'name.required' => 'El campo nombre es requerido.',
+                'surname.required' => 'El campo apellido es requerido.',
+                'dni.required' => 'El campo dni es requerido.',
+                'social_works.required' => 'El campo obra social es requerido.',
+            ]
+        );
         $patient->update($data);
         return redirect()->route('patients.index');
     }

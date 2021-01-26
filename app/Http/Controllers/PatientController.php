@@ -22,6 +22,7 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
+        // return $request;
         $data = $request->validate(
             [
                 'name' => 'required|min:3',
@@ -59,6 +60,9 @@ class PatientController extends Controller
         if ($patient->social_works) {
             foreach ($patient->social_works as $value) {
                 $aux = SocialWork::find($value['id']);
+                if ($value['affiliate']) {
+                    $aux->afiliado = $value['affiliate'];
+                }
                 $obras->push($aux);
             }
             $patient->obras = $obras;
@@ -83,9 +87,11 @@ class PatientController extends Controller
         $indices = collect($patient->social_works)->keyBy('id')->keys();
 
         $si = $socialworks->whereIn('id', $indices);
-        $si->map(function ($value) {
+        $si->map(function ($value) use ($patient) {
             $value->check = true;
+            $value->merge($patient->social_works[1]);
         });
+        return dd($si);
 
         $no = $socialworks->whereNotIn('id', $indices);
         $no->map(function ($value) {

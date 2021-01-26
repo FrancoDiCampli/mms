@@ -23,9 +23,12 @@ class Patient extends Model
     public function setSocialWorksAttribute($values)
     {
         $social_works = [];
-
         foreach ($values as $item) {
-            $social_works[] = ['id' => $item];
+            if ($item['affiliate'] <> null && $item['id'] <> 1) {
+                $social_works[] = ['id' => $item['id'], 'affiliate' => $item['affiliate']];
+            } elseif ($item['id'] == 1) {
+                $social_works[] = ['id' => 1, 'affiliate' => null];
+            }
         }
 
         $this->attributes['social_works'] = json_encode($social_works);

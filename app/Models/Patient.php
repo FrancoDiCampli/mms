@@ -34,7 +34,7 @@ class Patient extends Model
         $this->attributes['social_works'] = json_encode($social_works);
     }
 
-    public function socialwork()
+    public function socialwork() // ??
     {
         return $this->hasManyJson(SocialWork::class, 'social_work_id');
     }
@@ -42,5 +42,35 @@ class Patient extends Model
     public function queries()
     {
         return $this->hasMany(Query::class);
+    }
+
+    public function clinicalhistories()
+    {
+        return $this->hasMany(ClinicalHistory::class);
+    }
+
+    public function echocardiograms()
+    {
+        return $this->hasMany(Echocardiogram::class);
+    }
+
+    public function electrocardiograms()
+    {
+        return $this->hasMany(Electrocardiogram::class);
+    }
+
+    public function ecoarteriallowermembers()
+    {
+        return $this->hasMany(EcoArterialLowerMembers::class);
+    }
+
+    public function ecoarterialnecks()
+    {
+        return $this->hasMany(EcoArterialNeck::class);
+    }
+
+    public function ecovenouslowermembers()
+    {
+        return $this->hasMany(EcoVenousLowerMembers::class);
     }
 }

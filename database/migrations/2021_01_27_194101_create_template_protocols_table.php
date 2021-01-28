@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQueriesTable extends Migration
+class CreateTemplateProtocolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateQueriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('queries', function (Blueprint $table) {
+        Schema::create('template_protocols', function (Blueprint $table) {
             $table->id();
-            $table->text('query');
-            $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('user_id');
+            $table->string('name');
+            $table->string('process');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateQueriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('queries');
+        Schema::dropIfExists('template_protocols');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElectrocardiogramsTable extends Migration
+class CreatePresurgicalRisksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateElectrocardiogramsTable extends Migration
      */
     public function up()
     {
-        Schema::create('electrocardiograms', function (Blueprint $table) {
+        Schema::create('presurgical_risks', function (Blueprint $table) {
             $table->id();
+            $table->string('pathological_history')->nullable();
+            $table->string('medication')->nullable();
+            $table->string('physical_exam')->nullable();
             $table->string('requested_by')->nullable();
             $table->string('rhythm')->nullable();
             $table->string('frequency')->nullable();
@@ -28,6 +31,16 @@ class CreateElectrocardiogramsTable extends Migration
             $table->string('qtm')->nullable();
             $table->string('st')->nullable();
             $table->string('wave_t')->nullable();
+            $table->boolean('high_risk_surgery')->nullable();
+            $table->boolean('history_acv_tia')->nullable();
+            $table->boolean('ischemic_heart_disease')->nullable();
+            $table->boolean('insulin_dependent_diabetes')->nullable();
+            $table->boolean('heart_failure')->nullable();
+            $table->boolean('creatine')->nullable();
+            $table->boolean('i_risk_factors')->nullable();
+            $table->boolean('ii_risk_factor')->nullable();
+            $table->boolean('iii_risk_factors')->nullable();
+            $table->boolean('iv_or_more_risk_factors')->nullable();
             $table->text('conclusions');
             $table->string('date');
             $table->unsignedBigInteger('patient_id');
@@ -43,6 +56,6 @@ class CreateElectrocardiogramsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('electrocardiograms');
+        Schema::dropIfExists('presurgical_risks');
     }
 }

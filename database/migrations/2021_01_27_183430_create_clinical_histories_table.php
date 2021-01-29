@@ -26,8 +26,8 @@ class CreateClinicalHistoriesTable extends Migration
             $table->string('treatment');
             $table->string('hospitalization_date');
             $table->string('discharge_date');
-            $table->float('weight');
-            $table->float('height');
+            $table->string('weight');
+            $table->string('height');
             $table->boolean('type_intervention');
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('user_id');

@@ -15,15 +15,22 @@ class CreateEcoArterialNecksTable extends Migration
     {
         Schema::create('eco_arterial_necks', function (Blueprint $table) {
             $table->id();
-            $table->float('r_common_carotid');
-            $table->float('r_internal_carotid');
-            $table->float('r_vertebral');
-            $table->float('l_common_carotid');
-            $table->float('l_internal_carotid');
-            $table->float('l_vertebral');
+            $table->string('r_common_carotid')->nullable();
+            $table->string('r_common_carotid_description')->nullable();
+            $table->string('r_internal_carotid')->nullable();;
+            $table->string('r_internal_carotid_description')->nullable();
+            $table->string('r_vertebral')->nullable();
+            $table->string('r_vertebral_description')->nullable();
+            $table->string('l_common_carotid')->nullable();
+            $table->string('l_common_carotid_description')->nullable();
+            $table->string('l_internal_carotid')->nullable();
+            $table->string('l_internal_carotid_description')->nullable();
+            $table->string('l_vertebral')->nullable();
+            $table->string('l_vertebral_description')->nullable();
             $table->text('conclusions');
             $table->string('date');
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('sanatorio_id');
             $table->timestamps();
         });
     }

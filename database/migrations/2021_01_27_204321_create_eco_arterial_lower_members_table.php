@@ -15,21 +15,34 @@ class CreateEcoArterialLowerMembersTable extends Migration
     {
         Schema::create('eco_arterial_lower_members', function (Blueprint $table) {
             $table->id();
-            $table->float('r_common_femoral');
-            $table->float('r_superficial_femoral');
-            $table->float('r_poplitea');
-            $table->float('r_tibialis_anterior');
-            $table->float('r_tibialis_posterior');
-            $table->float('r_pedia');
-            $table->float('l_common_femoral');
-            $table->float('l_superficial_femoral');
-            $table->float('l_poplitea');
-            $table->float('l_tibialis_anterior');
-            $table->float('l_tibialis_posterior');
-            $table->float('l_pedia');
+            $table->string('r_common_femoral')->nullable();
+            $table->string('r_common_femoral_description')->nullable();
+            $table->string('r_superficial_femoral')->nullable();
+            $table->string('r_superficial_femoral_description')->nullable();
+            $table->string('r_poplitea')->nullable();
+            $table->string('r_poplitea_description')->nullable();
+            $table->string('r_tibialis_anterior')->nullable();
+            $table->string('r_tibialis_anterior_description')->nullable();
+            $table->string('r_tibialis_posterior')->nullable();
+            $table->string('r_tibialis_posterior_description')->nullable();
+            $table->string('r_pedia')->nullable();
+            $table->string('r_pedia_description')->nullable();
+            $table->string('l_common_femoral')->nullable();
+            $table->string('l_common_femoral_description')->nullable();
+            $table->string('l_superficial_femoral')->nullable();
+            $table->string('l_superficial_femoral_description')->nullable();
+            $table->string('l_poplitea')->nullable();
+            $table->string('l_poplitea_description')->nullable();
+            $table->string('l_tibialis_anterior')->nullable();
+            $table->string('l_tibialis_anterior_description')->nullable();
+            $table->string('l_tibialis_posterior')->nullable();
+            $table->string('l_tibialis_posterior_description')->nullable();
+            $table->string('l_pedia')->nullable();
+            $table->string('l_pedia_description')->nullable();
             $table->text('conclusions');
             $table->string('date');
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('sanatorio_id');
             $table->timestamps();
         });
     }

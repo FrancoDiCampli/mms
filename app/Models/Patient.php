@@ -24,11 +24,7 @@ class Patient extends Model
     {
         $social_works = [];
         foreach ($values as $item) {
-            if ($item['affiliate'] <> null && $item['id'] <> 1) {
-                $social_works[] = ['id' => $item['id'], 'affiliate' => $item['affiliate']];
-            } elseif ($item['id'] == 1) {
-                $social_works[] = ['id' => 1, 'affiliate' => null];
-            }
+            $social_works[] = ['id' => $item['id'], 'affiliate' => $item['affiliate']];
         }
 
         $this->attributes['social_works'] = json_encode($social_works);
@@ -72,5 +68,10 @@ class Patient extends Model
     public function ecovenouslowermembers()
     {
         return $this->hasMany(EcoVenousLowerMembers::class);
+    }
+
+    public function presurgicalrisks()
+    {
+        return $this->hasMany(PresurgicalRisk::class);
     }
 }

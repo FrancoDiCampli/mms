@@ -79,7 +79,7 @@
                         @if ($patient->social_works)
                         @foreach ($patient->obras as $item)
                         <ul>
-                            <li>{{$item->name}} Nº afiliado: {{$item->afiliado}}</li>
+                            {{-- <li>{{$item->name}} Nº afiliado: {{$item->afiliado}}</li> --}}
                         </ul>
                         @endforeach
                         @else
@@ -162,6 +162,24 @@
                         {{$patient->observations}}
                     </dd>
                 </div>
+            </dl>
+        </div>
+
+        <div>
+            Historias
+            <dl>
+                @foreach ($patient->clinicalhistories as $item)
+                <hr>
+                <div>
+                    <dt>
+                        Fecha: {{$item->created_at->format('d-m-Y')}} Hora: {{$item->created_at->format('H:s')}}
+                    </dt>
+                    <dd>
+                        Historia: {{$item}}
+                    </dd>
+                </div>
+                <hr>
+                @endforeach
             </dl>
         </div>
 

@@ -37,12 +37,12 @@ class Patient extends Model
 
     public function queries()
     {
-        return $this->hasMany(Query::class);
+        return $this->hasMany(Query::class)->orderBy('id', 'DESC');
     }
 
     public function clinicalhistories()
     {
-        return $this->hasMany(ClinicalHistory::class);
+        return $this->hasMany(ClinicalHistory::class)->orderBy('id', 'DESC');
     }
 
     public function echocardiograms()

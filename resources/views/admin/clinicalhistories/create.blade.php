@@ -2,7 +2,8 @@
 
 @section('content')
 
-<div class="flex justify-end -mt-8 -mb-4"><a title="Inicio" href="{{route('patients.index')}}" class="rounded p-2">
+<div class="flex justify-end -mt-8 -mb-4"><a title="Inicio" href="{{route('patients.show', $patient->id)}}"
+        class="rounded p-2">
         <svg aria-hidden="true" data-prefix="fas" data-icon="chevron-circle-left"
             class="w-8 text-indigo-400 hover:text-indigo-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path fill="currentColor"
@@ -11,7 +12,7 @@
     </a>
 </div>
 
-<h1>Clinical History</h1>
+<strong>New Clinical History</strong>
 
 @livewire('clinicalhistories.create', ['paciente' => $patient])
 

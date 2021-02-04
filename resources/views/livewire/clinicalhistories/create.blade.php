@@ -17,7 +17,7 @@
                                         class="block text-sm font-medium leading-5 text-gray-700">Plantilla</label>
                                     <select wire:model="template_id" wire:change="seleccionar"
                                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                        <option value="{{null}}">Seleccionar</option>
+                                        <option value="{{null}}">Por Defecto</option>
                                         @foreach ($templates as $item)
                                         <option value="{{$item->id}}">
                                             {{$item->name}}</option>
@@ -44,28 +44,108 @@
                                         value="{{$paciente->full_name}}" disabled>
                                 </div>
 
-                                <form action="">
-                                    <div class="col-span-6 sm:col-span-3">
-                                        <label for="reason_consult"
-                                            class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
-                                            Médicos</label>
-                                        <input id="reason_consult" name="reason_consult"
-                                            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                            value="{{$paciente->ant_medical}}">
-                                    </div>
+                                {{--  --}}
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="ant_medical"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
+                                        Médicos</label>
+                                    <input wire:model.defer="ant_medical" id="ant_medical" name="ant_medical"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
-                                        <label for="ant_surgical"
-                                            class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
-                                            Quirúrgicos</label>
-                                        <input id="ant_surgical" name="ant_surgical"
-                                            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                            value="{{$paciente->ant_surgical}}">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="ant_surgical"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
+                                        Quirúrgicos</label>
+                                    <input wire:model.defer="ant_surgical" id="ant_surgical" name="ant_surgical"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
+                                <button type="button" wire:click="actualizar" wire:loading.attr="disabled"
+                                    class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
+                                    <p wire:loading.class="hidden">Actualizar</p>
+                                    <div wire:loading.attr.remove="hidden" hidden>
+                                        <div class="flex items-center">
+                                            Espere...
+                                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle-notch"
+                                                class="svg-inline--fa fa-circle-notch fa-w-16 w-5 h-5 ml-3 animate-spin"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                <path fill="currentColor"
+                                                    d="M288 39.056v16.659c0 10.804 7.281 20.159 17.686 23.066C383.204 100.434 440 171.518 440 256c0 101.689-82.295 184-184 184-101.689 0-184-82.295-184-184 0-84.47 56.786-155.564 134.312-177.219C216.719 75.874 224 66.517 224 55.712V39.064c0-15.709-14.834-27.153-30.046-23.234C86.603 43.482 7.394 141.206 8.003 257.332c.72 137.052 111.477 246.956 248.531 246.667C393.255 503.711 504 392.788 504 256c0-115.633-79.14-212.779-186.211-240.236C302.678 11.889 288 23.456 288 39.056z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <button id="storeQuery"
+                                </button>
+                                {{--  --}}
+
+                                <div class="col-span-6">
+                                    <label for="reason_consult"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Motivo de
+                                        Consulta</label>
+                                    <input wire:model.defer="plantilla.reason_consult" id="reason_consult"
+                                        name="reason_consult"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
+
+
+                                <div class="col-span-6">
+                                    <label for="current_disease_history"
+                                        class="block text-sm font-medium leading-5 text-gray-700">AEA</label>
+                                    <textarea wire:model.defer="plantilla.current_disease_history"
+                                        name="current_disease_history" id="current_disease_history" cols="30" rows="5"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                    @error('current_disease_history')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="overall_status"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Estado General</label>
+                                    <input wire:model.defer="plantilla.overall_status" id="overall_status"
+                                        name="overall_status"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="respiratory_system"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Aparato
+                                        Respiratorio</label>
+                                    <input wire:model.defer="plantilla.respiratory_system" id="respiratory_system"
+                                        name="respiratory_system"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="cardiovascular_system"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Aparato
+                                        Cardiovascular</label>
+                                    <input wire:model.defer="plantilla.cardiovascular_system" id="cardiovascular_system"
+                                        name="cardiovascular_system"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="abdomen"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Abdomen</label>
+                                    <input wire:model.defer="plantilla.abdomen" id="abdomen" name="abdomen"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="diagnostic"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Diagnostico</label>
+
+                                    <strong>guardar si no existe</strong>
+
+                                    <input wire:model="plantilla.diagnostic" wire:keyup="buscarDiagnostico"
+                                        id="diagnostic" name="diagnostic"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+
+                                    @if ($auxDiagnostic)
+                                    <button type="button" wire:loading.attr="disabled"
                                         class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
-                                        <p id="textSend">Actualizar</p>
-                                        <div id="send" hidden>
+                                        <p wire:loading.class="hidden">Agregar</p>
+                                        <div wire:loading.attr.remove="hidden" hidden>
                                             <div class="flex items-center">
                                                 Espere...
                                                 <svg aria-hidden="true" data-prefix="fas" data-icon="circle-notch"
@@ -77,76 +157,14 @@
                                             </div>
                                         </div>
                                     </button>
-                                </form>
-
-                                <div class="col-span-6">
-                                    <label for="reason_consult"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Motivo de
-                                        Consulta</label>
-                                    <input wire:model="plantilla.reason_consult" id="reason_consult"
-                                        name="reason_consult"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                </div>
-
-
-                                <div class="col-span-6">
-                                    <label for="current_disease_history"
-                                        class="block text-sm font-medium leading-5 text-gray-700">AEA</label>
-                                    <textarea wire:model="plantilla.current_disease_history"
-                                        name="current_disease_history" id="current_disease_history" cols="30" rows="5"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                                    @error('current_disease_history')
-                                    <span class="text-red-500">{{$message}}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-span-6">
-                                    <label for="overall_status"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Estado General</label>
-                                    <input wire:model="plantilla.overall_status" id="overall_status"
-                                        name="overall_status"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                </div>
-
-                                <div class="col-span-6">
-                                    <label for="respiratory_system"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Aparato
-                                        Respiratorio</label>
-                                    <input wire:model="plantilla.respiratory_system" id="respiratory_system"
-                                        name="respiratory_system"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                </div>
-
-                                <div class="col-span-6">
-                                    <label for="cardiovascular_system"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Aparato
-                                        Cardiovascular</label>
-                                    <input wire:model="plantilla.cardiovascular_system" id="cardiovascular_system"
-                                        name="cardiovascular_system"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                </div>
-
-                                <div class="col-span-6">
-                                    <label for="abdomen"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Abdomen</label>
-                                    <input wire:model="plantilla.abdomen" id="abdomen" name="abdomen"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                </div>
-
-                                <div class="col-span-6">
-                                    <label for="diagnostic"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Diagnostico</label>
-
-                                    <strong>guardar si no existe</strong>
-
-                                    <input wire:model="plantilla.diagnostic" id="diagnostic" name="diagnostic"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @endif
                                 </div>
 
                                 <div class="col-span-6">
                                     <label for="study_plan"
                                         class="block text-sm font-medium leading-5 text-gray-700">Plan de
                                         estudio</label>
+                                    <strong>guardar si no existe</strong>
                                     <textarea wire:model="plantilla.study_plan" name="study_plan" id="study_plan"
                                         cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
@@ -158,6 +176,7 @@
                                 <div class="col-span-6">
                                     <label for="treatment"
                                         class="block text-sm font-medium leading-5 text-gray-700">Tratamiento</label>
+                                    <strong>guardar si no existe</strong>
                                     <input wire:model="plantilla.treatment" id="treatment" name="treatment"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 </div>
@@ -166,7 +185,7 @@
                                     <label for="hospitalization_date"
                                         class="block text-sm font-medium leading-5 text-gray-700">Fecha de
                                         Internación</label>
-                                    <input wire:model="hospitalization_date" id="hospitalization_date"
+                                    <input wire:model.defer="hospitalization_date" id="hospitalization_date"
                                         name="hospitalization_date" type="date"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('hospitalization_date')
@@ -178,7 +197,7 @@
                                     <label for="discharge_date"
                                         class="block text-sm font-medium leading-5 text-gray-700">Fecha de
                                         Externación</label>
-                                    <input wire:model="discharge_date" id="discharge_date" name="discharge_date"
+                                    <input wire:model.defer="discharge_date" id="discharge_date" name="discharge_date"
                                         type="date"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('discharge_date')
@@ -189,10 +208,10 @@
                         </div>
 
                         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            <button id="storeQuery"
+                            <button wire:loading.attr="disabled"
                                 class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
-                                <p id="textSend">Guardar</p>
-                                <div id="send" hidden>
+                                <p wire:loading.class="hidden">Guardar</p>
+                                <div wire:loading.attr.remove="hidden" hidden>
                                     <div class="flex items-center">
                                         Espere...
                                         <svg aria-hidden="true" data-prefix="fas" data-icon="circle-notch"

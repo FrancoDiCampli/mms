@@ -10,4 +10,14 @@ class EcoArterialLowerMembers extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function sanatorio()
+    {
+        return $this->hasOne(Sanatorio::class);
+    }
 }

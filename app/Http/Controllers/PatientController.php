@@ -54,7 +54,7 @@ class PatientController extends Controller
 
     public function show($id)
     {
-        $patient = Patient::find($id);
+        $patient = Patient::with(['clinicalhistories', 'queries'])->find($id);
         $obras = collect();
 
         if ($patient->social_works) {

@@ -10,7 +10,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="dni"
                                         class="block text-sm font-medium leading-5 text-gray-700">DNI</label>
-                                    <input wire:model="dni" id="dni" name="dni" minlength="7" max="8"
+                                    <input wire:model.defer="dni" id="dni" name="dni" minlength="7" max="8"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('dni')
                                     <span class="text-red-500">{{$message}}</span>
@@ -24,7 +24,7 @@
                                         <tbody>
                                             <td>
                                                 <input type="hidden" wire:model="social_works">
-                                                <select wire:model="obra_id"
+                                                <select wire:model.defer="obra_id"
                                                     class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                                     <option value="{{null}}">Seleccionar</option>
                                                     @foreach ($socialworks as $item)
@@ -57,7 +57,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="surname"
                                         class="block text-sm font-medium leading-5 text-gray-700">Apellido</label>
-                                    <input wire:model="surname" id="surname" name="surname"
+                                    <input wire:model.defer="surname" id="surname" name="surname"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('surname')
                                     <span class="text-red-500">{{$message}}</span>
@@ -67,7 +67,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="name"
                                         class="block text-sm font-medium leading-5 text-gray-700">Nombre</label>
-                                    <input wire:model="name" id="name" name="name"
+                                    <input wire:model.defer="name" id="name" name="name"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('name')
                                     <span class="text-red-500">{{$message}}</span>
@@ -77,7 +77,8 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="fnac" class="block text-sm font-medium leading-5 text-gray-700">Fecha
                                         Nacimiento</label>
-                                    <input id="fnac" name="fnac" type="date" max="{{now()->format('Y-m-d')}}"
+                                    <input wire:model.defer="fnac" id="fnac" name="fnac" type="date"
+                                        max="{{now()->format('Y-m-d')}}"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('fnac')
                                     <span class="text-red-500">{{$message}}</span>
@@ -87,7 +88,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="age"
                                         class="block text-sm font-medium leading-5 text-gray-700">Edad</label>
-                                    <input id="age" name="age"
+                                    <input wire:model.defer="age" id="age" name="age"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('age')
                                     <span class="text-red-500">{{$message}}</span>
@@ -97,7 +98,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="email"
                                         class="block text-sm font-medium leading-5 text-gray-700">Email</label>
-                                    <input id="email" name="email" type="email"
+                                    <input wire:model.defer="email" id="email" name="email" type="email"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('email')
                                     <span class="text-red-500">{{$message}}</span>
@@ -107,7 +108,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="phone"
                                         class="block text-sm font-medium leading-5 text-gray-700">Teléfono</label>
-                                    <input id="phone" name="phone" type="tel"
+                                    <input wire:model.defer="phone" id="phone" name="phone" type="tel"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('phone')
                                     <span class="text-red-500">{{$message}}</span>
@@ -117,7 +118,7 @@
                                 <div class="col-span-6">
                                     <label for="address"
                                         class="block text-sm font-medium leading-5 text-gray-700">Dirección</label>
-                                    <input id="address" name="address"
+                                    <input wire:model.defer="address" id="address" name="address"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('address')
                                     <span class="text-red-500">{{$message}}</span>
@@ -127,7 +128,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="city"
                                         class="block text-sm font-medium leading-5 text-gray-700">Localidad</label>
-                                    <input id="city" name="city"
+                                    <input wire:model.defer="city" id="city" name="city"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('city')
                                     <span class="text-red-500">{{$message}}</span>
@@ -137,7 +138,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="province"
                                         class="block text-sm font-medium leading-5 text-gray-700">Provincia</label>
-                                    <input id="province" name="province"
+                                    <input wire:model.defer="province" id="province" name="province"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('province')
                                     <span class="text-red-500">{{$message}}</span>
@@ -148,7 +149,8 @@
                                     <label for="ant_medical"
                                         class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
                                         Médicos</label>
-                                    <textarea name="ant_medical" id="ant_medical" cols="30" rows="5"
+                                    <textarea wire:model.defer="ant_medical" name="ant_medical" id="ant_medical"
+                                        cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                                     @error('ant_medical')
                                     <span class="text-red-500">{{$message}}</span>
@@ -159,7 +161,8 @@
                                     <label for="ant_surgical"
                                         class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
                                         Quirúrgicos</label>
-                                    <textarea name="ant_surgical" id="ant_surgical" cols="30" rows="5"
+                                    <textarea wire:model.defer="ant_surgical" name="ant_surgical" id="ant_surgical"
+                                        cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                                     @error('ant_surgical')
                                     <span class="text-red-500">{{$message}}</span>
@@ -169,7 +172,8 @@
                                 <div class="col-span-6">
                                     <label for="observations"
                                         class="block text-sm font-medium leading-5 text-gray-700">Observaciones</label>
-                                    <textarea name="observations" id="observations" cols="30" rows="5"
+                                    <textarea wire:model.defer="observations" name="observations" id="observations"
+                                        cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                                     @error('observations')
                                     <span class="text-red-500">{{$message}}</span>

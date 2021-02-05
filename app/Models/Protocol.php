@@ -10,4 +10,9 @@ class Protocol extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function clinicalhistory()
+    {
+        return $this->belongsTo(ClinicalHistory::class);
+    }
 }

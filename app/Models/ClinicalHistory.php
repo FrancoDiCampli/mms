@@ -23,7 +23,9 @@ class ClinicalHistory extends Model
 
     public function ambulatory()
     {
-        return $this->hasOne(Ambulatory::class);
+        if ($this->type_intervention) {
+            return $this->hasOne(Ambulatory::class);
+        }
     }
 
     public function dailyevolutions()
@@ -31,8 +33,18 @@ class ClinicalHistory extends Model
         return $this->hasMany(DailyEvolution::class);
     }
 
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
     public function sanatorio()
     {
         return $this->hasOne(Sanatorio::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

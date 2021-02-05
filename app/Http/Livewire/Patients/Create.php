@@ -14,6 +14,15 @@ class Create extends Component
     public $dni;
     public $surname;
     public $name;
+    public $age;
+    public $ant_medical;
+    public $ant_surgical;
+    public $email;
+    public $fnac;
+    public $phone;
+    public $address;
+    public $city;
+    public $observations;
 
     public function agregar()
     {
@@ -46,6 +55,15 @@ class Create extends Component
                 'surname' => 'required|min:3',
                 'dni' => 'required|min:7|max:8',
                 'social_works' => 'required',
+                'ant_medical' => 'nullable|min:3',
+                'ant_surgical' => 'nullable|min:3',
+                'age' => 'nullable|integer',
+                'fnac' => 'nullable|date',
+                'email' => 'nullable|email',
+                'phone' => 'nullable|min:6',
+                'address' => 'nullable|min:6',
+                'city' => 'nullable|min:6',
+                'observations' => 'nullable|min:6',
             ],
         );
 
@@ -54,6 +72,15 @@ class Create extends Component
             'surname' => $this->surname,
             'dni' => $this->dni,
             'social_works' => $this->social_works,
+            'ant_medical' => $this->ant_medical,
+            'ant_surgical' => $this->ant_surgical,
+            'age' => $this->age,
+            'fnac' => $this->fnac,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'city' => $this->city,
+            'observations' => $this->observations,
         ]);
 
         return redirect()->route('patients.index');

@@ -12,7 +12,7 @@ class Create extends Component
 {
     public $paciente;
     public $template_id;
-    public $plantilla = null;
+    public $plantilla;
     public $hospitalization_date;
     public $discharge_date;
     public $ant_medical;
@@ -21,15 +21,15 @@ class Create extends Component
     public $auxDiagnostic = null;
 
     protected $rules = [
-        'plantilla.reason_consult' => 'nullable',
-        'plantilla.current_disease_history' => 'nullable',
-        'plantilla.overall_status' => 'nullable',
-        'plantilla.respiratory_system' => 'nullable',
-        'plantilla.cardiovascular_system' => 'nullable',
-        'plantilla.abdomen' => 'nullable',
-        'plantilla.diagnostic' => 'nullable',
-        'plantilla.study_plan' => 'nullable',
-        'plantilla.treatment' => 'nullable',
+        'plantilla.reason_consult' => 'required',
+        'plantilla.current_disease_history' => 'required',
+        'plantilla.overall_status' => 'required',
+        'plantilla.respiratory_system' => 'required',
+        'plantilla.cardiovascular_system' => 'required',
+        'plantilla.abdomen' => 'required',
+        'plantilla.diagnostic' => 'required',
+        'plantilla.study_plan' => 'required',
+        'plantilla.treatment' => 'required',
         'hospitalization_date' => 'required|date',
         'discharge_date' => 'required|date|after_or_equal:hospitalization_date',
     ];

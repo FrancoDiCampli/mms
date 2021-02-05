@@ -51,6 +51,9 @@
                                         Médicos</label>
                                     <input wire:model.defer="ant_medical" id="ant_medical" name="ant_medical"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('ant_medical')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">
@@ -59,6 +62,9 @@
                                         Quirúrgicos</label>
                                     <input wire:model.defer="ant_surgical" id="ant_surgical" name="ant_surgical"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('ant_surgical')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <button type="button" wire:click="actualizar" wire:loading.attr="disabled"
                                     class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
@@ -84,6 +90,9 @@
                                     <input wire:model.defer="plantilla.reason_consult" id="reason_consult"
                                         name="reason_consult"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.reason_consult')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
 
@@ -93,7 +102,7 @@
                                     <textarea wire:model.defer="plantilla.current_disease_history"
                                         name="current_disease_history" id="current_disease_history" cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                                    @error('current_disease_history')
+                                    @error('plantilla.current_disease_history')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>
@@ -104,6 +113,9 @@
                                     <input wire:model.defer="plantilla.overall_status" id="overall_status"
                                         name="overall_status"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.overall_status')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-span-6">
@@ -113,6 +125,9 @@
                                     <input wire:model.defer="plantilla.respiratory_system" id="respiratory_system"
                                         name="respiratory_system"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.respiratory_system')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-span-6">
@@ -122,6 +137,9 @@
                                     <input wire:model.defer="plantilla.cardiovascular_system" id="cardiovascular_system"
                                         name="cardiovascular_system"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.cardiovascular_system')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-span-6">
@@ -129,6 +147,9 @@
                                         class="block text-sm font-medium leading-5 text-gray-700">Abdomen</label>
                                     <input wire:model.defer="plantilla.abdomen" id="abdomen" name="abdomen"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.abdomen')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-span-6">
@@ -140,6 +161,9 @@
                                     <input wire:model="plantilla.diagnostic" wire:keyup="buscarDiagnostico"
                                         id="diagnostic" name="diagnostic"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.diagnostic')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
 
                                     @if ($auxDiagnostic)
                                     <button type="button" wire:loading.attr="disabled"
@@ -168,7 +192,7 @@
                                     <textarea wire:model="plantilla.study_plan" name="study_plan" id="study_plan"
                                         cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                                    @error('study_plan')
+                                    @error('plantilla.study_plan')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>
@@ -179,6 +203,9 @@
                                     <strong>guardar si no existe</strong>
                                     <input wire:model="plantilla.treatment" id="treatment" name="treatment"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('plantilla.treatment')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">

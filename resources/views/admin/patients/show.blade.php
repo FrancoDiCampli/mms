@@ -78,7 +78,7 @@
                         @if ($patient->social_works)
                         @foreach ($patient->obras as $item)
                         <ul>
-                            {{-- <li>{{$item->name}} Nº afiliado: {{$item->afiliado}}</li> --}}
+                            <li>{{$item->name}} Nº afiliado: {{$item->afiliado}}</li>
                         </ul>
                         @endforeach
                         @else

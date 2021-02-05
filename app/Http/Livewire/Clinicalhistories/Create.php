@@ -30,6 +30,8 @@ class Create extends Component
         'plantilla.diagnostic' => 'nullable',
         'plantilla.study_plan' => 'nullable',
         'plantilla.treatment' => 'nullable',
+        'hospitalization_date' => 'required|date',
+        'discharge_date' => 'required|date|after_or_equal:hospitalization_date',
     ];
 
     public function mount()
@@ -62,6 +64,8 @@ class Create extends Component
 
     public function store()
     {
+        $this->validate();
+
         if ($this->template_id == null) {
             $attributes = $this->plantilla;
             $attributes['name'] = 'nombre' . time();

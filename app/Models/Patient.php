@@ -30,10 +30,10 @@ class Patient extends Model
         $this->attributes['social_works'] = json_encode($social_works);
     }
 
-    public function socialwork() // ??
-    {
-        return $this->hasManyJson(SocialWork::class, 'social_work_id');
-    }
+    // public function socialwork()
+    // {
+    //     return $this->hasOne(SocialWork::class, 'social_work_id');
+    // }
 
     public function queries()
     {

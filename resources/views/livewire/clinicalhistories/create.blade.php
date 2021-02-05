@@ -158,15 +158,19 @@
 
                                     <strong>guardar si no existe</strong>
 
-                                    <input wire:model="plantilla.diagnostic" wire:keyup="buscarDiagnostico"
-                                        id="diagnostic" name="diagnostic"
+                                    <input wire:model="diagnostic" wire:keyup="buscarDiagnostico" id="diagnostic"
+                                        name="diagnostic"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('plantilla.diagnostic')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
 
-                                    @if ($auxDiagnostic)
-                                    <button type="button" wire:loading.attr="disabled"
+                                    @forelse ($auxDiagnostic ?? [] as $item)
+                                    <li wire:click="selectDiagnostico({{$item->id}})" class="cursor-pointer">
+                                        {{$item->diagnostic}}
+                                    </li>
+                                    @empty
+                                    <button wire:click="agregar" type="button" wire:loading.attr="disabled"
                                         class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
                                         <p wire:loading.class="hidden">Agregar</p>
                                         <div wire:loading.attr.remove="hidden" hidden>
@@ -181,7 +185,9 @@
                                             </div>
                                         </div>
                                     </button>
-                                    @endif
+                                    @endforelse
+
+
                                 </div>
 
                                 <div class="col-span-6">

@@ -42,13 +42,30 @@ class Create extends Component
 
     public function buscarDiagnostico()
     {
-        $this->auxDiagnostic = Diagnostic::where('diagnostic', $this->diagnostic)->get();
+        $this->auxDiagnostic = Diagnostic::where('diagnostic', 'LIKE', $this->diagnostic . '%')->get();
+    }
+
+    public function selectDiagnostico($id)
+    {
+        $this->diagnostic = Diagnostic::find($id)->diagnostic;
+        $this->plantilla['diagnostic'] = $this->diagnostic;
+        $this->auxDiagnostic = null;
+    }
+
+    public function agregar()
+    {
+        $newDiagnostic = Diagnostic::create([
+            'diagnostic' => $this->diagnostic
+        ]);
+
+        $this->diagnostic = $newDiagnostic->diagnostic;
     }
 
     public function seleccionar()
     {
         if ($this->template_id) {
             $this->plantilla = TemplateClinicalHistory::findOrFail($this->template_id);
+            $this->diagnostic = $this->plantilla['diagnostic'];
         } else $this->plantilla = null;
     }
 

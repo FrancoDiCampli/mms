@@ -18,7 +18,12 @@ class Create extends Component
     public $ant_medical;
     public $ant_surgical;
     public $diagnostic;
-    public $auxDiagnostic = null;
+    public $diagnostics;
+    public $inputDiagnostic;
+    public $auxDiagnostic = [];
+    public $arrayDiagnostic = [];
+    public $weight;
+    public $height;
 
     protected $rules = [
         'plantilla.reason_consult' => 'required',
@@ -32,6 +37,8 @@ class Create extends Component
         'plantilla.treatment' => 'required',
         'hospitalization_date' => 'required|date',
         'discharge_date' => 'required|date|after_or_equal:hospitalization_date',
+        'height' => 'required',
+        'weight' => 'required',
     ];
 
     public function mount()
@@ -40,36 +47,67 @@ class Create extends Component
         $this->ant_surgical = $this->paciente->ant_surgical;
     }
 
-    public function buscarDiagnostico()
+    public function createDiagnostic()
     {
-        $this->auxDiagnostic = Diagnostic::where('diagnostic', 'LIKE', $this->diagnostic . '%')->get();
+        $newDiagnostic = Diagnostic::create([
+            'diagnostic' => $this->inputDiagnostic
+        ]);
+
+        $this->addDiagnostic($newDiagnostic);
     }
 
-    public function selectDiagnostico($id)
+    public function addDiagnostic($value)
+    {
+        $this->arrayDiagnostic[] = $value;
+        $this->convertDiagnostic();
+    }
+
+    public function deleteDiagnostic($id)
+    {
+        array_splice($this->arrayDiagnostic, $id, 1, null);
+        $this->convertDiagnostic();
+    }
+
+    public function searchDiagnostic()
+    {
+        $values = Diagnostic::where('diagnostic', 'LIKE', $this->inputDiagnostic . '%')->get();
+        if (count($values) > 0) {
+            $this->auxDiagnostic = $values;
+        }
+    }
+
+    public function selectDiagnostic($id)
     {
         $this->diagnostic = Diagnostic::find($id)->diagnostic;
         $this->plantilla['diagnostic'] = $this->diagnostic;
         $this->auxDiagnostic = null;
     }
 
-    public function agregar()
+    public function convertDiagnostic()
     {
-        $newDiagnostic = Diagnostic::create([
-            'diagnostic' => $this->diagnostic
-        ]);
+        if (count($this->arrayDiagnostic) > 0) {
+            foreach ($this->arrayDiagnostic as $item) {
+                $this->diagnostic = $this->diagnostic . ', ' . $item['diagnostic'];
+            }
+        }
 
-        $this->diagnostic = $newDiagnostic->diagnostic;
+        $this->plantilla['diagnostic'] = $this->diagnostic;
     }
 
-    public function seleccionar()
+    public function selectTemplate()
     {
         if ($this->template_id) {
             $this->plantilla = TemplateClinicalHistory::findOrFail($this->template_id);
-            $this->diagnostic = $this->plantilla['diagnostic'];
+            $diagnostic = $this->plantilla['diagnostic'];
+            $arreglo = [
+                'id' => 0,
+                'diagnostic' => $diagnostic
+            ];
+            $this->addDiagnostic($arreglo);
         } else $this->plantilla = null;
     }
 
-    public function actualizar()
+    public function updatePatient()
     {
         $patient = Patient::findOrFail($this->paciente->id);
         $patient->update([
@@ -92,8 +130,8 @@ class Create extends Component
         $data = $this->plantilla->toArray();
 
         $data['patient_id'] = $this->paciente->id;
-        $data['weight'] = 90;
-        $data['height'] = 2;
+        $data['weight'] = $this->weight;
+        $data['height'] = $this->height;
         $data['sanatorio_id'] = 1;
         $data['type_intervention'] = 1;
         $data['user_id'] = auth()->user()->id;

@@ -15,7 +15,7 @@
                                 <div class="col-span-6">
                                     <label for=""
                                         class="block text-sm font-medium leading-5 text-gray-700">Plantilla</label>
-                                    <select wire:model="template_id" wire:change="seleccionar"
+                                    <select wire:model="template_id" wire:change="selectTemplate"
                                         class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                         <option value="{{null}}">Por Defecto</option>
                                         @foreach ($templates as $item)
@@ -44,6 +44,26 @@
                                         value="{{$paciente->full_name}}" disabled>
                                 </div>
 
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="height"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Altura</label>
+                                    <input wire:model="height" id="height" name="height" type="number" step="0.01"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('height')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="weight"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Peso</label>
+                                    <input wire:model="weight" id="weight" name="weight" type="number" step="0.01"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('weight')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
                                 {{--  --}}
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="ant_medical"
@@ -66,7 +86,7 @@
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>
-                                <button type="button" wire:click="actualizar" wire:loading.attr="disabled"
+                                <button type="button" wire:click="updatePatient" wire:loading.attr="disabled"
                                     class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
                                     <p wire:loading.class="hidden">Actualizar</p>
                                     <div wire:loading.attr.remove="hidden" hidden>
@@ -152,27 +172,34 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-span-6">
+                                <div class="col-span-6 sm:col-span-3">
+
+                                    <input type="hidden" wire:model="diagnostic">
+
                                     <label for="diagnostic"
                                         class="block text-sm font-medium leading-5 text-gray-700">Diagnostico</label>
-
-                                    <strong>guardar si no existe</strong>
-
-                                    <input wire:model="diagnostic" wire:keyup="buscarDiagnostico" id="diagnostic"
+                                    <input wire:model="inputDiagnostic" wire:keyup="searchDiagnostic" id="diagnostic"
                                         name="diagnostic"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('plantilla.diagnostic')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
 
-                                    @forelse ($auxDiagnostic ?? [] as $item)
-                                    <li wire:click="selectDiagnostico({{$item->id}})" class="cursor-pointer">
-                                        {{$item->diagnostic}}
-                                    </li>
-                                    @empty
-                                    <button wire:click="agregar" type="button" wire:loading.attr="disabled"
+                                    {{-- <select name="" id=""
+                                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                        @foreach ($auxDiagnostic ?? [] as $item)
+                                        <option wire:click="addDiagnostic({{$item}})" value="{{$item->id}}">
+                                    {{$item->diagnostic}}</option>
+                                    @endforeach
+                                    </select> --}}
+                                    @foreach ($auxDiagnostic ?? [] as $item)
+                                    <li wire:click="addDiagnostic({{$item}})" class="cursor-pointer">
+                                        <strong>{{$item->diagnostic}}</strong></li>
+                                    @endforeach
+
+                                    <button wire:click="createDiagnostic" type="button" wire:loading.attr="disabled"
                                         class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
-                                        <p wire:loading.class="hidden">Agregar</p>
+                                        <p wire:loading.class="hidden">Crear</p>
                                         <div wire:loading.attr.remove="hidden" hidden>
                                             <div class="flex items-center">
                                                 Espere...
@@ -185,9 +212,21 @@
                                             </div>
                                         </div>
                                     </button>
-                                    @endforelse
 
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    @foreach ($arrayDiagnostic ?? [] as $item)
+                                    <span class="bg-green-500 rounded-lg p-1">{{$item['diagnostic']}} <button
+                                            wire:click="deleteDiagnostic({{$loop->index}})" type="button">
+                                            <svg class="fill-current h-4 w-4 " role="button" viewBox="0 0 20 20">
+                                                <path d="M14.348,14.849c-0.469,0.469-1.229,0.469-1.697,0L10,11.819l-2.651,3.029c-0.469,0.469-1.229,0.469-1.697,0
+                                                                     c-0.469-0.469-0.469-1.229,0-1.697l2.758-3.15L5.651,6.849c-0.469-0.469-0.469-1.228,0-1.697s1.228-0.469,1.697,0L10,8.183
+                                                                     l2.651-3.031c0.469-0.469,1.228-0.469,1.697,0s0.469,1.229,0,1.697l-2.758,3.152l2.758,3.15
+                                                                     C14.817,13.62,14.817,14.38,14.348,14.849z"></path>
+                                            </svg>
+                                        </button></span>
 
+                                    @endforeach
                                 </div>
 
                                 <div class="col-span-6">

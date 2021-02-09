@@ -25,7 +25,8 @@ class CreatePatientsTable extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
-            $table->json('social_works');
+            $table->unsignedBigInteger('social_work_id');
+            $table->string('num_affiliate')->nullable();
             $table->string('affiliate')->nullable();
             $table->text('ant_medical')->nullable();
             $table->text('ant_surgical')->nullable();

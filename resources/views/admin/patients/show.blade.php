@@ -4,13 +4,12 @@
 
 <div class="flex justify-start">
     <div class="mb-6 w-full text-center">
-        <a class="text-green-500" href="{{route('queries.create', $patient->id)}}">
+        <a class="text-green-500" href="{{route('queries.create', $patient)}}">
             Nueva Consulta
             </span>
         </a>
 
-        <a class="text-blue-500" href="{{route('clinicalhistory.create', $patient->id)}}" class=""
-            title="Historia Clinica">
+        <a class="text-blue-500" href="{{route('clinicalhistory.create', $patient)}}" class="" title="Historia Clinica">
             Nueva Historia Clinica
         </a>
     </div>
@@ -44,11 +43,11 @@
 
                     <x-slot name="content">
                         <ul class="space-y-2">
-                            <li class="hover:bg-gray-200 rounded p-2"><a href="{{route('patients.edit', $patient->id)}}"
+                            <li class="hover:bg-gray-200 rounded p-2"><a href="{{route('patients.edit', $patient)}}"
                                     class="block">Editar</a>
                             </li>
                             <li class="hover:bg-gray-200 rounded p-2">
-                                <form action="{{route('patients.destroy', $patient->id)}}" method="POST"
+                                <form action="{{route('patients.destroy', $patient)}}" method="POST"
                                     onsubmit="return confirm('¿Desea Continuar? Se eliminará de forma permanente el paciente.')">
                                     @method('DELETE')
                                     @csrf
@@ -75,15 +74,7 @@
                         Obra Social
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        @if ($patient->social_works)
-                        @foreach ($patient->obras as $item)
-                        <ul>
-                            <li>{{$item->name}} Nº afiliado: {{$item->afiliado}}</li>
-                        </ul>
-                        @endforeach
-                        @else
-                        Particular
-                        @endif
+                        {{$patient->social_work->name}}
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -91,7 +82,7 @@
                         Nº Afiliado
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{$patient->affiliate}}
+                        {{$patient->num_affiliate}}
                     </dd>
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -164,40 +155,46 @@
             </dl>
         </div>
 
-        <div>
-            Historias
-            <dl>
+        <div class="grid grid-cols-2 gap-2">
+            <div>
+                <strong>Historias</strong>
                 @foreach ($patient->clinicalhistories as $item)
-                <hr>
-                <div>
-                    <dt>
-                        Fecha: {{$item->created_at->format('d-m-Y')}} Hora: {{$item->created_at->format('H:s')}}
-                    </dt>
-                    <dd>
-                        Historia: {{$item}}
-                    </dd>
+                @foreach ($item->getAttributes() as $key => $value)
+                <div class="p-1 border-2 border-black font-sans w-72">
+                    <div class="border-t-4 border-black text-sm pb-1">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold">{{$key}}</span>
+                            </div>
+                            <div class="font-bold">{{$value}}</div>
+                        </div>
+                        <hr class="border-gray-500" />
+                    </div>
                 </div>
-                <hr>
                 @endforeach
-            </dl>
-        </div>
-
-        <div>
-            Consultas
-            <dl>
+                <br>
+                @endforeach
+            </div>
+            <div>
+                <strong>Consultas</strong>
                 @foreach ($patient->queries as $item)
-                <hr>
-                <div>
-                    <dt>
-                        Fecha: {{$item->created_at->format('d-m-Y')}} Hora: {{$item->created_at->format('H:s')}}
-                    </dt>
-                    <dd>
-                        Consulta: {{$item->query}}
-                    </dd>
+                @foreach ($item->getAttributes() as $key => $value)
+                <div class="p-1 border-2 border-black font-sans w-72">
+                    <div class="border-t-4 border-black text-sm pb-1">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold">{{$key}}</span>
+                            </div>
+                            <div class="font-bold">{{$value}}</div>
+                        </div>
+                        <hr class="border-gray-500" />
+                    </div>
                 </div>
-                <hr>
                 @endforeach
-            </dl>
+                <br>
+                @endforeach
+
+            </div>
         </div>
     </div>
 </div>

@@ -8,6 +8,8 @@ use App\Models\Patient;
 use App\Models\TemplateClinicalHistory;
 use Livewire\Component;
 
+use function PHPUnit\Framework\isEmpty;
+
 class Create extends Component
 {
     public $paciente;
@@ -20,7 +22,7 @@ class Create extends Component
     public $diagnostic;
     public $diagnostics;
     public $inputDiagnostic;
-    public $auxDiagnostic = [];
+    public $auxDiagnostic = null;
     public $arrayDiagnostic = [];
     public $weight;
     public $height;
@@ -60,6 +62,8 @@ class Create extends Component
     {
         $this->arrayDiagnostic[] = $value;
         $this->convertDiagnostic();
+        $this->auxDiagnostic = null;
+        $this->inputDiagnostic = null;
     }
 
     public function deleteDiagnostic($id)
@@ -73,7 +77,7 @@ class Create extends Component
         $values = Diagnostic::where('diagnostic', 'LIKE', $this->inputDiagnostic . '%')->get();
         if (count($values) > 0) {
             $this->auxDiagnostic = $values;
-        }
+        } else $this->auxDiagnostic = null;
     }
 
     public function selectDiagnostic($id)
@@ -96,6 +100,7 @@ class Create extends Component
 
     public function selectTemplate()
     {
+        $this->arrayDiagnostic = [];
         if ($this->template_id) {
             $this->plantilla = TemplateClinicalHistory::findOrFail($this->template_id);
             $diagnostic = $this->plantilla['diagnostic'];
@@ -104,7 +109,10 @@ class Create extends Component
                 'diagnostic' => $diagnostic
             ];
             $this->addDiagnostic($arreglo);
-        } else $this->plantilla = null;
+        } else {
+            $this->plantilla = null;
+            $this->arrayDiagnostic = [];
+        }
     }
 
     public function updatePatient()

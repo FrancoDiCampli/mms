@@ -12,10 +12,13 @@
     </a>
 </div>
 
+<strong>Editar Paciente</strong>
+
 <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
     <div class="mt-10 sm:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-6 lg:flex lg:justify-center">
             <div class="mt-5 md:mt-0 md:col-span-2">
+
                 <form action="{{route('patients.update', $patient->id)}}" method="POST" enctype="multipart/form-data"
                     onsubmit="updatePatient.disabled = true; send.hidden = false; textSend.hidden = true;">
                     @csrf
@@ -35,27 +38,32 @@
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-2">
-                                    <label for="social_works"
-                                        class="block text-sm font-medium leading-5 text-gray-700">Obra Social</label>
-                                    @foreach ($patient->obras as $value)
-                                    <ul>
-                                        <li><input type="checkbox" name="social_works[]" id="" @if ($value->check)
-                                            checked
-                                            @endif value="{{$value->id}}">{{$value->name}}</li>
-                                    </ul>
-                                    @endforeach
-                                    @error('social_works')
+                                    <label for="social_work_id"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Obra
+                                        Social</label>
+                                    <select name="social_work_id" id="social_work_id"
+                                        class="mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                        <option value="{{$patient->social_work->id}}">{{$patient->social_work->name}}
+                                        </option>
+                                        @foreach ($socialworks as $item)
+                                        @if ($item->id != $patient->social_work->id)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endif
+                                        @endforeach
+                                    </select>
+                                    @error('social_work_id')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-2">
-                                    <label for="affiliate" class="block text-sm font-medium leading-5 text-gray-700">Nº
+                                    <label for="num_affiliate"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Nº
                                         Afiliado</label>
-                                    <input id="affiliate" name="affiliate"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                        value="{{$patient->affiliate}}">
-                                    @error('affiliate')
+                                    <input name="num_affiliate" id="num_affiliate" placeholder="Nº Afiliado" class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm
+                                                focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out
+                                                sm:text-sm sm:leading-5" value="{{$patient->num_affiliate}}">
+                                    @error('num_affiliate')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
                                 </div>
@@ -85,7 +93,7 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="fnac" class="block text-sm font-medium leading-5 text-gray-700">Fecha
                                         Nacimiento</label>
-                                    <input id="fnac" name="fnac" type="date"
+                                    <input id="fnac" name="fnac" type="date" max="{{now()->format('Y-m-d')}}"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                         value="{{$patient->fnac}}">
                                     @error('fnac')
@@ -160,6 +168,28 @@
                                 </div>
 
                                 <div class="col-span-6">
+                                    <label for="ant_medical"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
+                                        Médicos</label>
+                                    <textarea name="ant_medical" id="ant_medical" cols="30" rows="5"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">{{$patient->ant_medical}}</textarea>
+                                    @error('ant_medical')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6">
+                                    <label for="ant_surgical"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Antecedentes
+                                        Quirúrgicos</label>
+                                    <textarea name="ant_surgical" id="ant_surgical" cols="30" rows="5"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">{{$patient->ant_surgical}}</textarea>
+                                    @error('ant_surgical')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-6">
                                     <label for="observations"
                                         class="block text-sm font-medium leading-5 text-gray-700">Observaciones</label>
                                     <textarea name="observations" id="observations" cols="30" rows="5"
@@ -171,7 +201,7 @@
                             </div>
                         </div>
                         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            <button id="updatePatient"
+                            <button type="submit" id="updatePatient"
                                 class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
                                 <p id="textSend">Actualizar</p>
                                 <div id="send" hidden>

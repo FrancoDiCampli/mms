@@ -11,29 +11,15 @@ class Patient extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'social_works' => 'array'
-    ];
-
     public function getFullNameAttribute()
     {
         return ucwords($this->surname . ', ' . $this->name);
     }
 
-    public function setSocialWorksAttribute($values)
+    public function social_work()
     {
-        $social_works = [];
-        foreach ($values as $item) {
-            $social_works[] = ['id' => $item['id'], 'affiliate' => $item['affiliate']];
-        }
-
-        $this->attributes['social_works'] = json_encode($social_works);
+        return $this->hasOne(SocialWork::class, 'id', 'social_work_id');
     }
-
-    // public function socialwork()
-    // {
-    //     return $this->hasOne(SocialWork::class, 'social_work_id');
-    // }
 
     public function queries()
     {

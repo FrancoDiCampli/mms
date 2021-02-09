@@ -3,8 +3,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6 lg:flex lg:justify-center">
             <div class="mt-5 md:mt-0 md:col-span-2">
 
-                <form wire:submit.prevent="store" method="POST" enctype="multipart/form-data"
-                    onsubmit="storeQuery.disabled = true; send.hidden = false; textSend.hidden = true;">
+                <form wire:submit.prevent="store" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
@@ -178,9 +177,32 @@
 
                                     <label for="diagnostic"
                                         class="block text-sm font-medium leading-5 text-gray-700">Diagnostico</label>
-                                    <input wire:model="inputDiagnostic" wire:keyup="searchDiagnostic" id="diagnostic"
-                                        name="diagnostic"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    <div class="relative flex items-center">
+                                        <input wire:model="inputDiagnostic" wire:keyup="searchDiagnostic"
+                                            id="diagnostic" name="diagnostic"
+                                            class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                        @if (is_null($auxDiagnostic))
+                                        <span class="absolute right-0">
+                                            <button wire:click="createDiagnostic" type="button"
+                                                wire:loading.attr="disabled"
+                                                class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
+                                                <p wire:loading.class="hidden">Crear</p>
+                                                <div wire:loading.attr.remove="hidden" hidden>
+                                                    <div class="flex items-center">
+                                                        Espere...
+                                                        <svg aria-hidden="true" data-prefix="fas"
+                                                            data-icon="circle-notch"
+                                                            class="svg-inline--fa fa-circle-notch fa-w-16 w-5 h-5 ml-3 animate-spin"
+                                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                            <path fill="currentColor"
+                                                                d="M288 39.056v16.659c0 10.804 7.281 20.159 17.686 23.066C383.204 100.434 440 171.518 440 256c0 101.689-82.295 184-184 184-101.689 0-184-82.295-184-184 0-84.47 56.786-155.564 134.312-177.219C216.719 75.874 224 66.517 224 55.712V39.064c0-15.709-14.834-27.153-30.046-23.234C86.603 43.482 7.394 141.206 8.003 257.332c.72 137.052 111.477 246.956 248.531 246.667C393.255 503.711 504 392.788 504 256c0-115.633-79.14-212.779-186.211-240.236C302.678 11.889 288 23.456 288 39.056z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </span>
+                                        @endif
+                                    </div>
                                     @error('plantilla.diagnostic')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror
@@ -196,23 +218,6 @@
                                     <li wire:click="addDiagnostic({{$item}})" class="cursor-pointer">
                                         <strong>{{$item->diagnostic}}</strong></li>
                                     @endforeach
-
-                                    <button wire:click="createDiagnostic" type="button" wire:loading.attr="disabled"
-                                        class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
-                                        <p wire:loading.class="hidden">Crear</p>
-                                        <div wire:loading.attr.remove="hidden" hidden>
-                                            <div class="flex items-center">
-                                                Espere...
-                                                <svg aria-hidden="true" data-prefix="fas" data-icon="circle-notch"
-                                                    class="svg-inline--fa fa-circle-notch fa-w-16 w-5 h-5 ml-3 animate-spin"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                    <path fill="currentColor"
-                                                        d="M288 39.056v16.659c0 10.804 7.281 20.159 17.686 23.066C383.204 100.434 440 171.518 440 256c0 101.689-82.295 184-184 184-101.689 0-184-82.295-184-184 0-84.47 56.786-155.564 134.312-177.219C216.719 75.874 224 66.517 224 55.712V39.064c0-15.709-14.834-27.153-30.046-23.234C86.603 43.482 7.394 141.206 8.003 257.332c.72 137.052 111.477 246.956 248.531 246.667C393.255 503.711 504 392.788 504 256c0-115.633-79.14-212.779-186.211-240.236C302.678 11.889 288 23.456 288 39.056z" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </button>
-
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     @foreach ($arrayDiagnostic ?? [] as $item)
@@ -233,7 +238,7 @@
                                     <label for="study_plan"
                                         class="block text-sm font-medium leading-5 text-gray-700">Plan de
                                         estudio</label>
-                                    <strong>guardar si no existe</strong>
+
                                     <textarea wire:model="plantilla.study_plan" name="study_plan" id="study_plan"
                                         cols="30" rows="5"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
@@ -245,7 +250,7 @@
                                 <div class="col-span-6">
                                     <label for="treatment"
                                         class="block text-sm font-medium leading-5 text-gray-700">Tratamiento</label>
-                                    <strong>guardar si no existe</strong>
+
                                     <input wire:model="plantilla.treatment" id="treatment" name="treatment"
                                         class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @error('plantilla.treatment')

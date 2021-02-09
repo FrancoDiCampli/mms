@@ -11,13 +11,13 @@ class QueryController extends Controller
     public function index()
     {
         $queries = Query::orderBy('created_at', 'DESC')->paginate(5);
-        return view('admin.queries.index', compact('queries'));
+        return view('admin.queries.index', ['queries' => $queries]);
     }
 
     public function create($id)
     {
         $patient = Patient::find($id);
-        return view('admin.queries.create', compact('patient'));
+        return view('admin.queries.create', ['patient' => $patient]);
     }
 
     public function store(Request $request)

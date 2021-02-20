@@ -12,11 +12,12 @@
     </a>
 </div>
 
+<strong>New Query</strong>
+
 <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
     <div class="mt-10 sm:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-6 lg:flex lg:justify-center">
             <div class="mt-5 md:mt-0 md:col-span-2">
-                {{-- @livewire('queries.create', ['paciente' => $patient]) --}}
                 <form action="{{route('queries.store')}}" method="POST" enctype="multipart/form-data"
                     onsubmit="storeQuery.disabled = true; send.hidden = false; textSend.hidden = true;">
                     @csrf
@@ -49,7 +50,7 @@
                                     <label for="consulta"
                                         class="block text-sm font-medium leading-5 text-gray-700">Consulta</label>
                                     <textarea name="consulta" id="consulta" cols="30" rows="10"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">{{old('consulta')}}</textarea>
                                     @error('consulta')
                                     <span class="text-red-500">{{$message}}</span>
                                     @enderror

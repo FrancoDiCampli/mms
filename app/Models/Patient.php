@@ -11,42 +11,24 @@ class Patient extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'social_works' => 'array'
-    ];
-
     public function getFullNameAttribute()
     {
         return ucwords($this->surname . ', ' . $this->name);
     }
 
-    public function setSocialWorksAttribute($values)
+    public function social_work()
     {
-        $social_works = [];
-        foreach ($values as $item) {
-            if ($item['affiliate'] <> null && $item['id'] <> 1) {
-                $social_works[] = ['id' => $item['id'], 'affiliate' => $item['affiliate']];
-            } elseif ($item['id'] == 1) {
-                $social_works[] = ['id' => 1, 'affiliate' => null];
-            }
-        }
-
-        $this->attributes['social_works'] = json_encode($social_works);
-    }
-
-    public function socialwork() // ??
-    {
-        return $this->hasManyJson(SocialWork::class, 'social_work_id');
+        return $this->hasOne(SocialWork::class, 'id', 'social_work_id');
     }
 
     public function queries()
     {
-        return $this->hasMany(Query::class);
+        return $this->hasMany(Query::class)->orderBy('id', 'DESC');
     }
 
     public function clinicalhistories()
     {
-        return $this->hasMany(ClinicalHistory::class);
+        return $this->hasMany(ClinicalHistory::class)->orderBy('id', 'DESC');
     }
 
     public function echocardiograms()
@@ -72,5 +54,10 @@ class Patient extends Model
     public function ecovenouslowermembers()
     {
         return $this->hasMany(EcoVenousLowerMembers::class);
+    }
+
+    public function presurgicalrisks()
+    {
+        return $this->hasMany(PresurgicalRisk::class);
     }
 }

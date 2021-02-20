@@ -15,6 +15,8 @@ class CreateClinicalHistoriesTable extends Migration
     {
         Schema::create('clinical_histories', function (Blueprint $table) {
             $table->id();
+            $table->text('ant_medical')->nullable();
+            $table->text('ant_surgical')->nullable();
             $table->string('reason_consult');
             $table->text('current_disease_history');
             $table->string('overall_status');

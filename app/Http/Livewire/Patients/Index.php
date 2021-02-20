@@ -20,7 +20,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.patients.index', [
-            'patients' => Patient::select(['id', 'surname', 'name', 'dni', 'social_works'])->orderBy('surname', 'ASC')->orWhere('surname', 'LIKE', $this->search . '%')
+            'patients' => Patient::select(['id', 'surname', 'name', 'dni'])->orderBy('surname', 'ASC')->orWhere('surname', 'LIKE', $this->search . '%')
                 ->orWhere('dni', 'LIKE', $this->search . '%')
                 ->orWhere('name', 'LIKE', $this->search . '%')->paginate(5)
         ]);

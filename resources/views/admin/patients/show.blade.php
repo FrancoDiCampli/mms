@@ -4,15 +4,13 @@
 
 <div class="flex justify-start">
     <div class="mb-6 w-full text-center">
-        <a href="{{route('queries.create', $patient->id)}}">
-            <svg aria-hidden="true" data-prefix="fas" data-icon="stethoscope"
-                class="svg-inline--fa fa-stethoscope fa-w-16 h-5 w-5 mx-auto text-gray-700 hover:text-green-500"
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="currentColor"
-                    d="M447.1 112c-34.2.5-62.3 28.4-63 62.6-.5 24.3 12.5 45.6 32 56.8V344c0 57.3-50.2 104-112 104-60 0-109.2-44.1-111.9-99.2C265 333.8 320 269.2 320 192V36.6c0-11.4-8.1-21.3-19.3-23.5L237.8.5c-13-2.6-25.6 5.8-28.2 18.8L206.4 35c-2.6 13 5.8 25.6 18.8 28.2l30.7 6.1v121.4c0 52.9-42.2 96.7-95.1 97.2-53.4.5-96.9-42.7-96.9-96V69.4l30.7-6.1c13-2.6 21.4-15.2 18.8-28.2l-3.1-15.7C107.7 6.4 95.1-2 82.1.6L19.3 13C8.1 15.3 0 25.1 0 36.6V192c0 77.3 55.1 142 128.1 156.8C130.7 439.2 208.6 512 304 512c97 0 176-75.4 176-168V231.4c19.1-11.1 32-31.7 32-55.4 0-35.7-29.2-64.5-64.9-64zm.9 80c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z" />
-            </svg>
-            <p class="text-sm text-gray-700">Nueva Consulta</p>
+        <a class="text-green-500" href="{{route('queries.create', $patient)}}">
+            Nueva Consulta
             </span>
+        </a>
+
+        <a class="text-blue-500" href="{{route('clinicalhistory.create', $patient)}}" class="" title="Historia Clinica">
+            Nueva Historia Clinica
         </a>
     </div>
 </div>
@@ -45,11 +43,11 @@
 
                     <x-slot name="content">
                         <ul class="space-y-2">
-                            <li class="hover:bg-gray-200 rounded p-2"><a href="{{route('patients.edit', $patient->id)}}"
+                            <li class="hover:bg-gray-200 rounded p-2"><a href="{{route('patients.edit', $patient)}}"
                                     class="block">Editar</a>
                             </li>
                             <li class="hover:bg-gray-200 rounded p-2">
-                                <form action="{{route('patients.destroy', $patient->id)}}" method="POST"
+                                <form action="{{route('patients.destroy', $patient)}}" method="POST"
                                     onsubmit="return confirm('¿Desea Continuar? Se eliminará de forma permanente el paciente.')">
                                     @method('DELETE')
                                     @csrf
@@ -76,15 +74,7 @@
                         Obra Social
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        @if ($patient->social_works)
-                        @foreach ($patient->obras as $item)
-                        <ul>
-                            <li>{{$item->name}} Nº afiliado: {{$item->afiliado}}</li>
-                        </ul>
-                        @endforeach
-                        @else
-                        Particular
-                        @endif
+                        {{$patient->social_work->name}}
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -92,7 +82,7 @@
                         Nº Afiliado
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{$patient->affiliate}}
+                        {{$patient->num_affiliate}}
                     </dd>
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -165,22 +155,46 @@
             </dl>
         </div>
 
-        <div>
-            Consultas
-            <dl>
-                @foreach ($patient->queries as $item)
-                <hr>
-                <div>
-                    <dt>
-                        Fecha: {{$item->created_at->format('d-m-Y')}} Hora: {{$item->created_at->format('H:s')}}
-                    </dt>
-                    <dd>
-                        Consulta: {{$item->query}}
-                    </dd>
+        <div class="grid grid-cols-2 gap-2">
+            <div>
+                <strong>Historias</strong>
+                @foreach ($patient->clinicalhistories as $item)
+                @foreach ($item->getAttributes() as $key => $value)
+                <div class="p-1 border-2 border-black font-sans w-72">
+                    <div class="border-t-4 border-black text-sm pb-1">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold">{{$key}}</span>
+                            </div>
+                            <div class="font-bold">{{$value}}</div>
+                        </div>
+                        <hr class="border-gray-500" />
+                    </div>
                 </div>
-                <hr>
                 @endforeach
-            </dl>
+                <br>
+                @endforeach
+            </div>
+            <div>
+                <strong>Consultas</strong>
+                @foreach ($patient->queries as $item)
+                @foreach ($item->getAttributes() as $key => $value)
+                <div class="p-1 border-2 border-black font-sans w-72">
+                    <div class="border-t-4 border-black text-sm pb-1">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold">{{$key}}</span>
+                            </div>
+                            <div class="font-bold">{{$value}}</div>
+                        </div>
+                        <hr class="border-gray-500" />
+                    </div>
+                </div>
+                @endforeach
+                <br>
+                @endforeach
+
+            </div>
         </div>
     </div>
 </div>

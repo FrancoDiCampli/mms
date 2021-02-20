@@ -25,8 +25,6 @@ class CreateTemplateClinicalHistoriesTable extends Migration
             $table->string('diagnostic');
             $table->text('study_plan');
             $table->string('treatment');
-            $table->string('hospitalization_date');
-            $table->string('discharge_date');
             $table->timestamps();
         });
     }

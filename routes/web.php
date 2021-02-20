@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClinicalHistoryController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\QueryController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('patients', PatientController::class);
     Route::resource('queries', QueryController::class)->except('create');
     Route::get('queriescreate/{id}', [QueryController::class, 'create'])->name('queries.create');
+
+    Route::resource('clinicalhistories', ClinicalHistoryController::class)->except('create');
+    Route::get('clinicalhistorycreate/{id}', [ClinicalHistoryController::class, 'create'])->name('clinicalhistory.create');
 });
 
 require __DIR__ . '/auth.php';

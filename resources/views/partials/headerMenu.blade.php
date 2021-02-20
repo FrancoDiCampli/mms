@@ -23,7 +23,7 @@
             </button>
 
             <!-- Dropdown card -->
-            <div @click.away="isOpen = false" x-show.transition.opacity="isOpen" class="absolute w-48 max-w-md mt-3 transform bg-white rounded-md shadow-lg -translate-x-40 min-w-max" style="display: none;">
+            <div @click.away="isOpen = false" x-show.transition.opacity="isOpen" class="absolute w-48 max-w-md mt-3 transform bg-white rounded-md shadow-lg -translate-x-40 min-w-max z-30" style="display: none;">
               <div class="p-4 font-medium border-b">
                 <span class="text-gray-800">Notification</span>
               </div>
@@ -53,7 +53,7 @@
           <div class="absolute right-0 p-1 bg-green-400 border border-white rounded-full bottom-3"></div>
 
           <!-- Dropdown card -->
-          <div @click.away="isOpen = false" x-show.transition.opacity="isOpen" class="absolute mt-3 transform -translate-x-48 bg-white rounded-md shadow-lg min-w-max w-56" style="display: none;">
+          <div @click.away="isOpen = false" x-show.transition.opacity="isOpen" class="absolute mt-3 transform -translate-x-48 bg-white rounded-md shadow-lg min-w-max w-56 z-30" style="display: none;">
             <div class="flex flex-col p-4 space-y-1 font-medium border-b">
               <span class="text-gray-800">{{Auth::user()->name}}</span>
               <span class="text-sm text-gray-400">{{Auth::user()->email}}</span>

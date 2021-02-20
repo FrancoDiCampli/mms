@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         SocialWork::create(['name' => 'PAMI']);
         SocialWork::create(['name' => 'OSDE']);
 
-        Patient::factory(100)->create();
+        // Patient::factory(100)->create();
 
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'surgeon']);

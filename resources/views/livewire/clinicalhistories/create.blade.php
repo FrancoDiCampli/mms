@@ -181,8 +181,8 @@
                                         <input wire:model="inputDiagnostic" wire:keyup="searchDiagnostic"
                                             id="diagnostic" name="diagnostic"
                                             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                        @if (is_null($auxDiagnostic))
-                                        <span class="absolute right-0">
+
+                                        @if (count($auxDiagnostic)<1) <span class="absolute right-0">
                                             <button wire:click="createDiagnostic" type="button"
                                                 wire:loading.attr="disabled"
                                                 class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
@@ -200,8 +200,8 @@
                                                     </div>
                                                 </div>
                                             </button>
-                                        </span>
-                                        @endif
+                                            </span>
+                                            @endif
                                     </div>
                                     @error('plantilla.diagnostic')
                                     <span class="text-red-500">{{$message}}</span>
@@ -216,12 +216,15 @@
                                     </select> --}}
                                     @foreach ($auxDiagnostic ?? [] as $item)
                                     <li wire:click="addDiagnostic({{$item}})" class="cursor-pointer">
-                                        <strong>{{$item->diagnostic}}</strong></li>
+                                        <strong>{{$item->code}} - {{$item->diagnostic}}</strong></li>
                                     @endforeach
+                                    <div wire:click.prevent>
+                                        {{$auxDiagnostic->links()}}
+                                    </div>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     @foreach ($arrayDiagnostic ?? [] as $item)
-                                    <span class="bg-green-500 rounded-lg p-1">{{$item['diagnostic']}} <button
+                                    <span class="bg-green-500 rounded-lg m-2">{{$item['diagnostic']}} <button
                                             wire:click="deleteDiagnostic({{$loop->index}})" type="button">
                                             <svg class="fill-current h-4 w-4 " role="button" viewBox="0 0 20 20">
                                                 <path d="M14.348,14.849c-0.469,0.469-1.229,0.469-1.697,0L10,11.819l-2.651,3.029c-0.469,0.469-1.229,0.469-1.697,0

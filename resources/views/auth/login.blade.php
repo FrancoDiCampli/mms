@@ -1,74 +1,86 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+  <div class="">
+    
+    <div class=" min-h-full w-auto mt-3 lg:my-6 md:w-6/12 mx-auto px-7 justify-center py-20 lg:bg-white lg:rounded-lg lg:shadow-md">    
+      
+      <div class="flex justify-center">
+        <img src="{{asset('img/logo-basic.png')}}" alt="" class="w-40 h-40">
+      </div>
+      
+      <!-- Session Status -->
+      <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+      <!-- Validation Errors -->
+      <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+      {{-- Form --}}
+      <form method="POST" action="{{ route('login') }}">
+      @csrf            
+        <div class="w-full md:w-10/12 lg:w-1/2 mx-auto mt-10 md:mt-14">   
+            
+          {{-- User --}}
+          <div class="mt-5">
+            <label for="" class="text-base text-text-300">Usuario</label>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="py-2" x-data="{ show: true }">
-              <span class="px-1 text-sm text-gray-600">Password</span>
-              <div class="relative">
-                <input placeholder="" id="password" name="password" :type="show ? 'password' : 'text'" class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                
-                <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-          
-                  <svg class="h-6 text-gray-700" fill="none" @click="show = !show"
-                    :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg"
-                    viewbox="0 0 576 512">
-                    <path fill="currentColor"
-                      d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
-                    </path>
-                  </svg>
-          
-                  <svg class="h-6 text-gray-700" fill="none" @click="show = !show"
-                    :class="{'block': !show, 'hidden':show }" xmlns="http://www.w3.org/2000/svg"
-                    viewbox="0 0 640 512">
-                    <path fill="currentColor"
-                      d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z">
-                    </path>
-                  </svg>
-          
+            <div class="relative mt-1">
+                <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-text-200">                  
+                  <svg class="w-6 h-6" aria-hidden="true" data-prefix="fas" data-icon="user" class="svg-inline--fa fa-user fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>
                 </div>
-              </div>
+                <input id="email" type="email" name="email" :value="old('email')" class="input-icon" placeholder="Usuario" required autofocus>
+            </div>
+          </div>
+
+          {{-- Password --}}
+          <div class="mt-5">
+            <label for="" class="text-base text-text-300">Contraseña</label>
+
+            <div class="relative mt-1">
+                <div class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-text-200">
+                  <svg class="w-6 h-6" aria-hidden="true" data-prefix="fas" data-icon="lock" class="svg-inline--fa fa-lock fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"/></svg>
+                </div>
+
+                <div class="" x-data="{ show: true }">
+                  <input class="input-icon" placeholder="Contraseña" id="password" name="password" :type="show ? 'password' : 'text'">
+
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">       
+                  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 text-text-300" fill="none" @click="show = !show"
+                    :class="{'hidden': !show, 'block':show }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 text-text-300" fill="none" @click="show = !show"
+                    :class="{'block': !show, 'hidden':show }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+            
+                  </div>
+                </div>
+                
+            </div>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="block md:flex items-center justify-between mt-5">
+            <div>
+              <label for="remember_me" class="inline-flex items-center">
+                  <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                  <span class="ml-2 text-sm text-text-300">{{ __('Recordarme') }}</span>
+              </label>
             </div>
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
+            {{-- Button --}}
+            <div class="mt-6 md:mt-0">
+              <button class="btn btn-primary w-full" type="submit">  
+                Ingresar
+                <svg class="w-5 h-5 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>              
+              </button>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Login') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
+          </div>
+        </div>
+      </form>
+  </div>
 </x-guest-layout>

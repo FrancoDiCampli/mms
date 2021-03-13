@@ -179,17 +179,17 @@
                 <strong>Consultas</strong>
                 @foreach ($patient->queries as $item)
                 @foreach ($item->getAttributes() as $key => $value)
-                <div class="p-1 border-2 border-black font-sans w-72">
-                    <div class="border-t-4 border-black text-sm pb-1">
+                
+                    
                         <div class="flex justify-between">
                             <div>
-                                <span class="font-bold">{{$key}}</span>
+                                <span class="">{{$key}}</span>
                             </div>
                             <div class="font-bold">{{$value}}</div>
                         </div>
-                        <hr class="border-gray-500" />
-                    </div>
-                </div>
+                       
+                    
+                
                 @endforeach
                 <br>
                 @endforeach

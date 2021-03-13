@@ -2,16 +2,18 @@
 
 namespace App\Http\Livewire\Clinicalhistories;
 
-use App\Models\ClinicalHistory;
-use App\Models\Diagnostic;
 use App\Models\Patient;
-use App\Models\TemplateClinicalHistory;
 use Livewire\Component;
+use App\Models\Diagnostic;
+use Livewire\WithPagination;
+use App\Models\ClinicalHistory;
 
-use function PHPUnit\Framework\isEmpty;
+use App\Models\TemplateClinicalHistory;
 
 class Create extends Component
 {
+    use WithPagination;
+
     public $paciente;
     public $template_id;
     public $plantilla;
@@ -22,7 +24,7 @@ class Create extends Component
     public $diagnostic;
     public $diagnostics;
     public $inputDiagnostic;
-    public $auxDiagnostic = null;
+    // public $auxDiagnostic = null;
     public $arrayDiagnostic = [];
     public $weight;
     public $height;
@@ -47,6 +49,7 @@ class Create extends Component
     {
         $this->ant_medical = $this->paciente->ant_medical;
         $this->ant_surgical = $this->paciente->ant_surgical;
+        $this->discharge_date = today()->format('Y-m-d');
     }
 
     public function createDiagnostic()
@@ -74,10 +77,11 @@ class Create extends Component
 
     public function searchDiagnostic()
     {
-        $values = Diagnostic::where('diagnostic', 'LIKE', $this->inputDiagnostic . '%')->get();
-        if (count($values) > 0) {
-            $this->auxDiagnostic = $values;
-        } else $this->auxDiagnostic = null;
+        $this->render();
+        // $values = Diagnostic::select(['id', 'code', 'diagnostic'])->where('diagnostic', 'LIKE', $this->inputDiagnostic . '%')->paginate(5);
+        // if (count($values) > 0) {
+        //     $this->auxDiagnostic = $values;
+        // } else $this->auxDiagnostic = null;
     }
 
     public function selectDiagnostic($id)
@@ -156,10 +160,18 @@ class Create extends Component
         return redirect()->route('patients.show', $this->paciente->id);
     }
 
+    public function updatingInputDiagnostic()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.clinicalhistories.create', [
-            'templates' => TemplateClinicalHistory::all(['id', 'name'])
+            'templates' => TemplateClinicalHistory::all(['id', 'name']),
+            'auxDiagnostic' => Diagnostic::select(['id', 'code', 'diagnostic'])
+                ->where('diagnostic', 'LIKE', $this->inputDiagnostic . '%')
+                ->paginate(5)
         ]);
     }
 }

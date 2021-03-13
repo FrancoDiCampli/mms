@@ -49,6 +49,7 @@ class Create extends Component
     {
         $this->ant_medical = $this->paciente->ant_medical;
         $this->ant_surgical = $this->paciente->ant_surgical;
+        $this->discharge_date = today()->format('Y-m-d');
     }
 
     public function createDiagnostic()

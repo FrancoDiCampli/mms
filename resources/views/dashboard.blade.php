@@ -136,8 +136,7 @@
     <div>
         <p class="text-text-400 text-xl my-1 font-medium border-b border-text-100">UI Table</p>
     </div>
-<!-- Table  -->
-    
+<!-- Table  -->    
     <div class="flex flex-col mt-6">
         <div class="-my-2 overflow-x-auto sm:-mx-6 md:mx-6 lg:mx-5">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

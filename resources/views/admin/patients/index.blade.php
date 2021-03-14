@@ -2,14 +2,13 @@
 
 @section('content')
 
-<div class="flex justify-end -mt-8 -mb-4"><a href="{{route('patients.create')}}" class="rounded p-2"
-        title="Crear Paciente">
-        <svg aria-hidden="true" data-prefix="fas" data-icon="plus-circle"
-            class="w-8 text-indigo-400 hover:text-indigo-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path fill="currentColor"
-                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z" />
+<div class="card">
+    <div class="flex items-center">   
+        <svg class="w-6 h-6 text-text-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-    </a>
+        <p class="text-text-500 text-2xl m-1 font-medium">Pacientes</p>
+    </div>
 </div>
 
 @livewire('patients.index')

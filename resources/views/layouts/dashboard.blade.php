@@ -48,9 +48,9 @@
                 </div>
 
                 {{-- Main --}}
-                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background" @click="sidebarOpen = false">
-                    <div class=" mx-auto px-6 md:px-10 py-8 min-h-full">
-                        
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background" @click="sidebarOpen = false">                    
+                    <div class="mx-auto px-6 md:px-10 py-8 min-h-full">                        
+
                         @yield('content')
                        
                     </div>

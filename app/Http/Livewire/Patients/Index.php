@@ -25,4 +25,10 @@ class Index extends Component
                 ->orWhere('name', 'LIKE', $this->search . '%')->paginate(5)
         ]);
     }
+
+
+    function showModal($id){
+
+        $this->emit('showModal', $id);
+    }
 }

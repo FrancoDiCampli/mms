@@ -24,6 +24,20 @@
                                     </select>
                                 </div>
 
+                                @if (!$plantilla)
+                                <div class="col-span-6">
+                                    <label for="name_template"
+                                        class="block text-sm font-medium leading-5 text-gray-700">Nombre
+                                        Plantilla</label>
+                                    <input wire:model.defer="name_template" id="name_template" name="name_template"
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    @error('name_template')
+                                    <span class="text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                @endif
+
+
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="dni"
                                         class="block text-sm font-medium leading-5 text-gray-700">DNI</label>
@@ -43,7 +57,7 @@
                                         value="{{$paciente->full_name}}" disabled>
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="hidden col-span-6 sm:col-span-3">
                                     <label for="height"
                                         class="block text-sm font-medium leading-5 text-gray-700">Altura</label>
                                     <input wire:model="height" id="height" name="height" type="number" step="0.01"
@@ -53,7 +67,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="hidden col-span-6 sm:col-span-3">
                                     <label for="weight"
                                         class="block text-sm font-medium leading-5 text-gray-700">Peso</label>
                                     <input wire:model="weight" id="weight" name="weight" type="number" step="0.01"
@@ -182,11 +196,11 @@
                                             id="diagnostic" name="diagnostic"
                                             class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
 
-                                        @if (count($auxDiagnostic)<1) <span class="absolute right-0">
+                                        <span class="absolute right-0">
                                             <button wire:click="createDiagnostic" type="button"
                                                 wire:loading.attr="disabled"
-                                                class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
-                                                <p wire:loading.class="hidden">Crear</p>
+                                                class="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-full text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
+                                                <p wire:loading.class="hidden">+</p>
                                                 <div wire:loading.attr.remove="hidden" hidden>
                                                     <div class="flex items-center">
                                                         Espere...
@@ -200,8 +214,8 @@
                                                     </div>
                                                 </div>
                                             </button>
-                                            </span>
-                                            @endif
+                                        </span>
+
                                     </div>
                                     @error('plantilla.diagnostic')
                                     <span class="text-red-500">{{$message}}</span>
@@ -214,6 +228,7 @@
                                     {{$item->diagnostic}}</option>
                                     @endforeach
                                     </select> --}}
+                                    @if (strlen($inputDiagnostic) > 0)
                                     @foreach ($auxDiagnostic ?? [] as $item)
                                     <li wire:click="addDiagnostic({{$item}})" class="cursor-pointer">
                                         <strong>{{$item->code}} - {{$item->diagnostic}}</strong></li>
@@ -221,6 +236,7 @@
                                     <div wire:click.prevent>
                                         {{$auxDiagnostic->links()}}
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     @foreach ($arrayDiagnostic ?? [] as $item)
@@ -242,12 +258,20 @@
                                         class="block text-sm font-medium leading-5 text-gray-700">Plan de
                                         estudio</label>
 
-                                    <textarea wire:model="plantilla.study_plan" name="study_plan" id="study_plan"
+                                    @foreach ($study_plans as $item)
+                                    <div>
+                                        <input wire:model="study_plan.{{$item->id}}]" type="checkbox"
+                                            value="{{$item->study_plan}}" id="{{$item->id}}">
+                                        {{$item->study_plan}}
+                                    </div>
+                                    @endforeach
+
+                                    {{-- <textarea wire:model="plantilla.study_plan" name="study_plan" id="study_plan"
                                         cols="30" rows="5"
-                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                                    @error('plantilla.study_plan')
+                                        class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea> --}}
+                                    {{-- @error('plantilla.study_plan')
                                     <span class="text-red-500">{{$message}}</span>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
 
                                 <div class="col-span-6">

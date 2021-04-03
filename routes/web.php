@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClinicalHistoryController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\QueryController;
+use App\Models\Patient;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::resource('patients', PatientController::class);
+    Route::put('updateAntecedentes/{id}', [PatientController::class, 'updateAntecedentes'])->name('patients.updateAntecedentes');
+
     Route::resource('queries', QueryController::class)->except('create');
     Route::get('queriescreate/{id}', [QueryController::class, 'create'])->name('queries.create');
 

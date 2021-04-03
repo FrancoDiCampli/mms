@@ -57,6 +57,17 @@ class PatientController extends Controller
         return redirect()->route('patients.show', $patient->id);
     }
 
+    public function updateAntecedentes(Request $request, $id)
+    {
+        $patient = Patient::findOrFail($id);
+        $patient->update([
+            'ant_medical' => $request->ant_medical,
+            'ant_surgical' => $request->ant_surgical,
+        ]);
+        $patient->touch();
+        return redirect()->route('patients.show', $patient->id);
+    }
+
     public function destroy($id)
     {
         $patient = Patient::find($id);

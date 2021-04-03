@@ -22,12 +22,13 @@ class Index extends Component
         return view('livewire.patients.index', [
             'patients' => Patient::select(['id', 'surname', 'name', 'dni', 'num_affiliate', 'phone'])->orderBy('surname', 'ASC')->orWhere('surname', 'LIKE', $this->search . '%')
                 ->orWhere('dni', 'LIKE', $this->search . '%')
-                ->orWhere('name', 'LIKE', $this->search . '%')->paginate(5)
+                ->orWhere('name', 'LIKE', $this->search . '%')->simplePaginate(5)
         ]);
     }
 
 
-    function showModal($id){
+    function showModal($id)
+    {
 
         $this->emit('showModal', $id);
     }

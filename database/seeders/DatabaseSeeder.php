@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\SocialWork;
+use App\Models\StudyPlan;
 use App\Models\TemplateClinicalHistory;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -27,6 +28,40 @@ class DatabaseSeeder extends Seeder
         Patient::factory(100)->create();
 
         TemplateClinicalHistory::factory(10)->create();
+
+        StudyPlan::factory()->create([
+            'study_plan' => 'Laboratorio'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Electrocardiograma'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Ecodoppler cardiaco'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Ecodoppler arterial de miembros inferiores'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Ecodoppler venoso de miembros inferiores'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Ecodoppler de vasos del cuello'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Ecografía abdominal'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Radiografia de torax'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Radiografia de abdomen'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Tomografía de torax'
+        ]);
+        StudyPlan::factory()->create([
+            'study_plan' => 'Tomografía de abdomen y pelvis'
+        ]);
 
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'surgeon']);

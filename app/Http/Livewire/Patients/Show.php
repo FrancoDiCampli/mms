@@ -8,7 +8,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public $open = 'hidden';
-    public $patientShow;    
+    public $patientShow;
 
     protected $listeners = ['showModal'];
 
@@ -17,15 +17,16 @@ class Show extends Component
         return view('livewire.patients.show');
     }
 
-    public function showModal($id){
-        
-        $this->open = '';
-        
-        $this->patientShow = Patient::find($id);
-        
-    }   
+    public function showModal($id)
+    {
 
-    public function closeModal(){
+        $this->open = '';
+
+        $this->patientShow = json_decode(Patient::find($id), 2);
+    }
+
+    public function closeModal()
+    {
         $this->open = 'hidden';
     }
 }

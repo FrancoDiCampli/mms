@@ -27,8 +27,21 @@
             <svg class="w-6 h-6 text-text-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p class="text-text-500 text-2xl m-1 font-medium">Paciente: {{$patient->full_name}}</p>
+            <p class="text-text-500 text-xl lg:text-2xl m-1 font-medium">Paciente: {{$patient->full_name}}</p>
         </div>
+
+        <button class="btn btn-default shadow-none hidden md:flex mr-2">
+            <svg class="w-5 h-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>         
+            <P class="hidden lg:flex">H. C.</P>            
+        </button>
+        <button class="btn btn-default shadow-none hidden md:flex mr-2">
+            <svg class="w-5 h-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <P class="hidden lg:flex">Ambulatorio</P>         
+        </button>
 
         <div class="flex justify-end">
             <x-dropdown align="right" width="48">
@@ -58,13 +71,13 @@
             </x-dropdown>
         </div>
     </div>
-    <a class="text-blue-500" href="{{route('clinicalhistory.create', $patient)}}" class="" title="Historia Clinica">
+    {{-- <a class="text-blue-500" href="{{route('clinicalhistory.create', $patient)}}" class="" title="Historia Clinica">
         Nueva Historia Clinica
     </a>
     <a class="text-green-500" href="{{route('queries.create', $patient)}}">
         Nueva Consulta
         </span>
-    </a>
+    </a> --}}
     <div x-data="{selected:null}">
         {{-- Datos del paciente --}}
         <div class="grid md:grid-cols-5 gap-4 mt-3 px-2">
@@ -103,8 +116,6 @@
             </div>  
         </div>
 
-
-
         {{-- Información desplegable --}}
         <div x-show="selected == 0" 
                 x-transition:enter="transition ease-out duration-200"
@@ -118,11 +129,7 @@
                     <div class="">
                         <p class="text-text-500 text-base font-medium">Teléfono</p>
                         <p class="text-text-400 text-base font-normal">{{$patient->phone}}</p>
-                    </div>
-                    <div class="">
-                        <p class="text-text-500 text-base font-medium">Email</p>
-                        <p class="text-text-400 text-base font-normal">{{$patient->email}}</p>
-                    </div>       
+                    </div>     
                     <div class="">
                         <p class="text-text-500 text-base font-medium">Dirección</p>
                         <p class="text-text-400 text-base font-normal">{{$patient->address}}</p>
@@ -141,7 +148,7 @@
                 <div class="w-full p-2">
                     <div class="">
                         <p class="text-text-500 text-base font-medium">Observaciones:</p>
-                        <p class="text-text-400 text-base font-normal">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque delectus corporis velit earum minima illum culpa, suscipit nisi voluptates optio!</p>
+                        <p class="text-text-400 text-base font-normal">{{$patient->observations ?? 'Sin observación.'}}</p>
                     </div>
                 </div>
         </div>
@@ -167,7 +174,7 @@
 {{-- Section historial médico --}}
 <div class="card">
     <div class="flex-1 flex items-center">
-        <p class="text-text-500 text-xl m-1 font-medium">Historial Médico</p>
+        <p class="text-text-500 text-lg lg:text-xl m-1 font-medium">Historial Médico</p>
     </div>
 
     <!-- Table Historial -->    
@@ -254,7 +261,7 @@
 {{-- Consulta --}}
 <div class="card">
     <div class="flex-1 flex items-center">
-        <p class="text-text-500 text-xl m-1 font-medium">Nueva consulta</p>
+        <p class="text-text-500 text-lg lg:text-xl m-1 font-medium">Nueva consulta</p>
     </div>
 
     <div class="mt-2 m-1">

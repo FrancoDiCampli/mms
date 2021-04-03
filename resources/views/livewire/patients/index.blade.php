@@ -1,14 +1,38 @@
 <div id="component">
     <div class="card">
-        <div class="flex items-center">   
-            <svg class="w-6 h-6 text-text-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p class="text-text-500 text-2xl m-1 font-medium">Pacientes</p>
+        <div class="flex items-center justify-between">   
+            <div class="flex items-center">
+                <svg class="w-6 h-6 text-text-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="text-text-500 text-xl lg:text-2xl m-1 font-medium">Pacientes</p>
+            </div>
+            
+            <div class="flex md:hidden justify-end">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="text-gray-500 rounded-full p-1 hover:bg-gray-100 focus:outline-none" title="Ver Más">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                              </svg>
+                        </button>
+                    </x-slot>
+    
+                    <x-slot name="content">
+                        <ul class="space-y-2 p-2">
+                            <li class="hover:bg-gray-100 rounded p-2 font"><a href="{{route('patients.create')}}"
+                                    class="block">Crear Paciente</a>
+                            </li>
+                            <li class="hover:bg-gray-100 rounded p-2 font"><a href="#"
+                                class="block">Exportar</a>
+                            </li>
+                        </ul>
+                    </x-slot>
+                </x-dropdown>
+            </div>
         </div>
-
+        
         <div class="mt-3 mb-4 flex items-center">
-
             <div class="w-full md:w-1/2 flex items-center">       
                 {{-- Search --}}
                 <div class="w-full items-center select-none">

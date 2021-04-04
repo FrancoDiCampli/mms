@@ -123,7 +123,7 @@
                         <td class="px-6 py-2 whitespace-nowrap">
                             <div class="flex items-center">                       
                             <div class="">
-                                <div class="text-sm font-medium text-gray-900">{{$patient->full_name}}</div>
+                                <a href="{{route('patients.show', $patient->id)}}" class="text-sm font-medium text-gray-900">{{$patient->full_name}}</a>
                                 <div class="text-sm text-gray-500">{{$patient->num_affiliate}}</div>
                             </div>
                             </div>

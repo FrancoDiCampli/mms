@@ -131,7 +131,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">  
                             <div class="">                            
                                 <label for="" class="text-base text-text-300">Localida</label>
-                                <input class="input-base" placeholder="Localida" id="city" name="city" value="{{ old('city') }}">
+                                <input class="input-base" placeholder="Localida" id="city" name="city" value="Villa Ángela">
                                 @error('city')
                                     <span class="text-red-500">{{$message}}</span>
                                 @enderror
@@ -139,7 +139,7 @@
                             
                             <div class="">
                                 <label for="" class="text-base text-text-300">Provinca</label>
-                                <input class="input-base" placeholder="Provinca" id="province" name="province" value="{{ old('province') }}">
+                                <input class="input-base" placeholder="Provinca" id="province" name="province" value="Chaco">
                                 @error('province')
                                 <span class="text-red-500">{{$message}}</span>
                                 @enderror

@@ -36,16 +36,20 @@
         </div>
 
         <a href="{{route('clinicalhistory.create', $patient)}}" class="btn btn-default shadow-none hidden md:flex mr-2">
-            <svg class="w-5 h-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>         
-            <P class="hidden lg:flex">H. C.</P>            
+            <svg class="w-5 h-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <P class="hidden lg:flex">H. C.</P>
         </a>
         <button class="btn btn-default shadow-none hidden md:flex mr-2">
-            <svg class="w-5 h-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <svg class="w-5 h-5 mr-1 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <P class="hidden lg:flex">Ambulatorio</P>         
+            <P class="hidden lg:flex">Ambulatorio</P>
         </button>
 
         <div class="flex justify-end">
@@ -161,7 +165,8 @@
         {{-- Antecedentes --}}
         <div class="mt-2 border-t pt-4">
             <form action="{{route('patients.updateAntecedentes', $patient->id)}}" method="POST"
-                enctype="multipart/form-data" onsubmit="updateAnt.disabled = true; send.hidden = false; textSend.hidden = true; svgSend.hidden = true;">
+                enctype="multipart/form-data"
+                onsubmit="updateAnt.disabled = true; send.hidden = false; textSend.hidden = true; svgSend.hidden = true;">
                 @method('PUT')
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,20 +193,22 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="px-1 w-full text-right mt-3 md:mt-2">
                     <button class="w-24 md:w-auto btn btn-primary" id="updateAnt">
                         <div class="flex items-center">
                             <div id="svgSend">
-                                <svg class="w-5 h-5 mr-1 hidden md:inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <svg class="w-5 h-5 mr-1 hidden md:inline-block" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
                             <p id="textSend">Actualizar</p>
                         </div>
                         <div id="send" hidden>
                             <div class="flex items-center">
-                                Espere 
+                                Espere
                                 <svg aria-hidden="true" data-prefix="fas" data-icon="circle-notch"
                                     class="svg-inline--fa fa-circle-notch fa-w-16 w-5 h-5 ml-3 animate-spin"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -215,8 +222,6 @@
             </form>
         </div>
     </div>
-
-
 
 
 </div>
@@ -255,14 +260,17 @@
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-100 overflow-y-auto h-8">
-                            @foreach ($patient->queries as $item)
-                            {{-- @foreach ($item->getAttributes() as $key => $value) --}}
+                            @foreach ($mezcla as $item)
                             <tr class="transition-all hover:bg-hover hover:shadow">
                                 <td class="px-6 py-2 ">
-                                    <div class="text-sm text-gray-900">{{$item->created_at->format('d/m/Y')}}</div>
+                                    <div class="text-sm text-gray-900">{{$item->created_at->format('d/m/Y H:i')}}</div>
                                 </td>
                                 <td class="px-6 py-2">
+                                    @if (get_class($item) == App\Models\ClinicalHistory::class)
+                                    <div class="text-sm text-gray-900">Historia Clinica</div>
+                                    @else
                                     <div class="text-sm text-gray-900">Consulta</div>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-2">
                                     <div class="text-sm text-gray-900">{{$item->query}}</div>
@@ -270,14 +278,14 @@
 
                                 <td class="flex items-center px-6 py-4">
                                     {{-- <a title="Ver Más" href="{{route('patients.show', $patient->id)}}"
-                                        class="btn-action-light">
-                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
+                                    class="btn-action-light">
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
                                     </a>
 
                                     <a href="#" class="btn-action-light">
@@ -334,15 +342,17 @@
             <button class="w-24 md:w-auto btn btn-primary" id="storeQuery">
                 <div class="flex items-center">
                     <div id="svgSendQuery">
-                        <svg class="w-5 h-5 mr-1 hidden md:inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg class="w-5 h-5 mr-1 hidden md:inline-block" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
                     <p id="textSendQuery">Guardar</p>
                 </div>
                 <div id="sendQuery" hidden>
                     <div class="flex items-center">
-                        Espere 
+                        Espere
                         <svg aria-hidden="true" data-prefix="fas" data-icon="circle-notch"
                             class="svg-inline--fa fa-circle-notch fa-w-16 w-5 h-5 ml-3 animate-spin"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

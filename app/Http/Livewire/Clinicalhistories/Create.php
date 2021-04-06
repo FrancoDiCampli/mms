@@ -7,7 +7,6 @@ use Livewire\Component;
 use App\Models\Diagnostic;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
-
 use App\Models\ClinicalHistory;
 use App\Models\StudyPlan;
 use App\Models\TemplateClinicalHistory;
@@ -32,6 +31,8 @@ class Create extends Component
     public $height = 0;
     public $name_template;
     public $study_plan = [];
+    public $filtro;
+    public $new_plan;
 
     protected $rules = [
         'plantilla.reason_consult' => 'required',
@@ -47,7 +48,8 @@ class Create extends Component
         'discharge_date' => 'required|date|after_or_equal:hospitalization_date',
         'height' => 'required',
         'weight' => 'required',
-        'name_template' => 'unique:template_clinical_histories,name'
+        'name_template' => 'unique:template_clinical_histories,name',
+        'new_plan' => 'unique:study_plans,study_plan'
     ];
 
     public function mount()
@@ -69,12 +71,29 @@ class Create extends Component
         $this->addDiagnostic($newDiagnostic);
     }
 
+    public function createPlan()
+    {
+        StudyPlan::create([
+            'study_plan' => $this->new_plan
+        ]);
+        $this->new_plan = '';
+        $this->render();
+    }
+
     public function addDiagnostic($value)
     {
-        $this->arrayDiagnostic[] = $value;
-        $this->convertDiagnostic();
-        $this->auxDiagnostic = null;
-        $this->inputDiagnostic = null;
+        $cond = true;
+        foreach ($this->arrayDiagnostic as $item) {
+            if ($item['id'] == $value['id']) {
+                $cond = false;
+            }
+        }
+        if ($cond) {
+            $this->arrayDiagnostic[] = $value;
+            $this->convertDiagnostic();
+            $this->auxDiagnostic = null;
+            $this->inputDiagnostic = null;
+        }
     }
 
     public function deleteDiagnostic($id)
@@ -86,10 +105,6 @@ class Create extends Component
     public function searchDiagnostic()
     {
         $this->render();
-        // $values = Diagnostic::select(['id', 'code', 'diagnostic'])->where('diagnostic', 'LIKE', $this->inputDiagnostic . '%')->paginate(5);
-        // if (count($values) > 0) {
-        //     $this->auxDiagnostic = $values;
-        // } else $this->auxDiagnostic = null;
     }
 
     public function selectDiagnostic($id)
@@ -106,7 +121,6 @@ class Create extends Component
                 $this->diagnostic = $this->diagnostic . ', ' . $item['diagnostic'];
             }
         }
-
         $this->plantilla['diagnostic'] = $this->diagnostic;
     }
 
@@ -164,6 +178,8 @@ class Create extends Component
 
         unset($data['name']);
         unset($data['id']);
+        unset($data['created_at']);
+        unset($data['updated_at']);
 
         ClinicalHistory::create($data);
 

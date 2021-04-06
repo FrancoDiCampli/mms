@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePatient;
-use App\Http\Requests\UpdatePatient;
+use Carbon\Carbon;
+use App\Models\Query;
 use App\Models\Patient;
 use App\Models\SocialWork;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePatient;
+use App\Http\Requests\UpdatePatient;
 
 class PatientController extends Controller
 {
@@ -25,8 +27,21 @@ class PatientController extends Controller
     public function store(StorePatient $request)
     {
         $data = $request->validated();
-        Patient::create($data);
-        return redirect()->route('patients.index');
+        try {
+            return DB::transaction(function () use ($data, $request) {
+                $patient = Patient::create($data);
+                if ($request->get('consulta')) {
+                    Query::create([
+                        'query' => $request->consulta,
+                        'patient_id' => $patient->id,
+                        'user_id' => auth()->user()->id,
+                    ]);
+                }
+                return redirect()->route('patients.index');
+            });
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function show($id)
@@ -39,7 +54,17 @@ class PatientController extends Controller
                 $patient->age = $patient->fnac->age;
             }
         }
-        return view('admin.patients.show', ['patient' => $patient]);
+
+        $mezcla = collect();
+        $patient->clinicalhistories->map(function ($item) use ($mezcla) {
+            $mezcla->push($item);
+        });
+        $patient->queries->map(function ($item) use ($mezcla) {
+            $mezcla->push($item);
+        });
+        $ordenar = $mezcla->sortByDesc('created_at');
+
+        return view('admin.patients.show', ['patient' => $patient, 'mezcla' => $ordenar->values()]);
     }
 
     public function edit($id)
